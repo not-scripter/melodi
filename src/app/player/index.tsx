@@ -3,40 +3,20 @@ import SongArtwork from "@/components/SongArtwork";
 import SongInfo from "@/components/SongInfo";
 import SongSlider from "@/components/SongSlider";
 import { Stack } from "expo-router";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import ImageColors, { ImageColorsResult } from "react-native-image-colors";
-import TrackPlayer, {
-  Event,
-  Track,
-  useTrackPlayerEvents,
-} from "react-native-track-player";
+import { Track, useActiveTrack } from "react-native-track-player";
 
 export default function index() {
-  const [track, settrack] = useState<Track | null>();
   const [imageColors, setimageColors] = useState<ImageColorsResult>();
-  const [bgColor, setbgColor] = useState<string>("#000");
+  const bgColor = imageColors
+    ? imageColors.platform === "ios"
+      ? imageColors.background
+      : imageColors.dominant
+    : "#000";
 
-  useTrackPlayerEvents(
-    [Event.PlaybackActiveTrackChanged, Event.MetadataCommonReceived],
-    async (event) => {
-      switch (event.type) {
-        case Event.PlaybackActiveTrackChanged:
-          const playingTrack = await TrackPlayer.getActiveTrack();
-          settrack(playingTrack);
-          break;
-      }
-    },
-  );
-
-  const getInitialTrack = async () => {
-    const playingTrack = await TrackPlayer.getActiveTrack();
-    settrack(playingTrack);
-  };
-
-  useEffect(() => {
-    getInitialTrack();
-  }, []);
+  const track: Track | undefined = useActiveTrack();
 
   const getImageColors = async () => {
     const response =
@@ -49,14 +29,6 @@ export default function index() {
   useEffect(() => {
     getImageColors();
   }, [track]);
-
-  useEffect(() => {
-    imageColors
-      ? imageColors.platform === "ios"
-        ? setbgColor(imageColors.background)
-        : setbgColor(imageColors.dominant)
-      : setbgColor("#000");
-  }, [imageColors]);
 
   return (
     <View
