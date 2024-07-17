@@ -24,8 +24,11 @@ export default function index() {
       <Link href="/player">
         <Button mode="elevated">Player</Button>
       </Link>
-      <Link href="/test">
-        <Button mode="elevated">Test</Button>
+      <Link href="/test/pan">
+        <Button mode="elevated">Pan test</Button>
+      </Link>
+      <Link href="/test/swip">
+        <Button mode="elevated">Swip test</Button>
       </Link>
     </View>
   );
