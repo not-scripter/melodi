@@ -1,8 +1,8 @@
-import { View, Pressable, Image } from "react-native";
 import React, { PropsWithChildren, useState } from "react";
+import { Image, Pressable, View } from "react-native";
+import ImageColors from "react-native-image-colors";
+import { Button, Text, useTheme } from "react-native-paper";
 import { Track } from "react-native-track-player";
-import { Text, useTheme } from "react-native-paper";
-import { getColors } from "react-native-image-colors";
 
 type SongArtwordProps = PropsWithChildren<{
   track: Track | null | undefined;
@@ -13,19 +13,11 @@ export default function SongArtwork({ track }: SongArtwordProps) {
 
   const [isInfoVisible, setisInfoVisible] = useState<boolean>(false);
 
-  const [artColors, setartColors] = useState();
-
-  // getColors(track?.artwork).then((res) => setartColors(res));
-  // console.log(artColors);
-  React.useEffect(() => {
+  async function getImageColors() {
     const url = "https://i.imgur.com/68jyjZT.jpg";
-
-    getColors(url, {
-      fallback: "#228B22",
-      cache: true,
-      key: url,
-    }).then((res) => console.log(res));
-  }, []);
+    const colosrs = await ImageColors.getColors(url);
+    console.log(colosrs);
+  }
 
   return (
     <View

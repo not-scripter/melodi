@@ -1,27 +1,40 @@
 import { View, Text } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SongInfo from "@/components/SongInfo";
 import SongArtwork from "@/components/SongArtwork";
 import PlayerControls from "@/components/PlayerControls";
 import { playlistData } from "@/constants";
-import { useTheme } from "react-native-paper";
 import { Stack } from "expo-router";
 import SongSlider from "@/components/SongSlider";
-
-//TEST: axios
+import ImageColors, { ImageColorsResult } from "react-native-image-colors";
 
 export default function index() {
-  const theme = useTheme();
+  const [imageColors, setimageColors] = useState<ImageColorsResult>();
+
+  const getImageColors = async (url: any) => {
+    const response = await ImageColors.getColors(url);
+    setimageColors(response);
+  };
+
+  useEffect(() => {
+    getImageColors(playlistData[2].artwork);
+  }, []);
+  console.log();
 
   return (
     <View
-      style={{ backgroundColor: theme.colors.onBackground }}
+      style={{
+        backgroundColor:
+          imageColors?.platform === "ios"
+            ? imageColors.background
+            : imageColors?.dominant,
+      }}
       className="h-full"
     >
       <View className="h-full p-4 flex-1 items-center justify-evenly">
-        <SongArtwork track={playlistData[0]} />
+        <SongArtwork track={playlistData[2]} />
         <View className="">
-          <SongInfo track={playlistData[0]} />
+          <SongInfo track={playlistData[2]} />
           <SongSlider />
           <PlayerControls />
         </View>
