@@ -21,7 +21,7 @@ export default function index() {
       className="h-full"
       style={{ backgroundColor: theme.colors.onBackground }}
     >
-      <Link push href="/player">
+      <Link href="/player">
         <Button mode="elevated">Player</Button>
       </Link>
       <Button mode="elevated" onPress={() => getmusic()}>

@@ -1,17 +1,13 @@
-import { View, Text } from "react-native";
-import React, { useState } from "react";
-import { useProgress } from "react-native-track-player";
 import Slider from "@react-native-community/slider";
-import { seekTo } from "react-native-track-player/lib/src/trackPlayer";
+import React from "react";
+import { Text, View } from "react-native";
 import { useTheme } from "react-native-paper";
-import { getColors } from "react-native-image-colors";
+import { useProgress } from "react-native-track-player";
+import { seekTo } from "react-native-track-player/lib/src/trackPlayer";
 
 export default function SongSlider() {
   const theme = useTheme();
-  const { position, buffered, duration } = useProgress();
-  console.log("buffered", buffered);
-
-  const [artColors, setartColors] = useState();
+  const { position, duration } = useProgress();
 
   return (
     <View className="w-full">
@@ -23,7 +19,7 @@ export default function SongSlider() {
         maximumTrackTintColor={theme.colors.onPrimary}
         onValueChange={(value) => seekTo(value)}
       />
-      <View className="flex-row w-full justify-between px-2">
+      <View className="flex-row w-full justify-between px-3">
         <Text className=" font-bold" style={{ color: theme.colors.onPrimary }}>
           {new Date(position * 1000).toISOString().substring(15, 19)}
         </Text>

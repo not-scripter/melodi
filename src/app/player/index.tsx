@@ -1,45 +1,81 @@
-import { View, Text } from "react-native";
-import React, { useEffect, useState } from "react";
-import SongInfo from "@/components/SongInfo";
-import SongArtwork from "@/components/SongArtwork";
 import PlayerControls from "@/components/PlayerControls";
-import { playlistData } from "@/constants";
-import { Stack } from "expo-router";
+import SongArtwork from "@/components/SongArtwork";
+import SongInfo from "@/components/SongInfo";
 import SongSlider from "@/components/SongSlider";
+import { Stack } from "expo-router";
+import React, { useCallback, useEffect, useState } from "react";
+import { View } from "react-native";
 import ImageColors, { ImageColorsResult } from "react-native-image-colors";
+import TrackPlayer, {
+  Event,
+  Track,
+  useTrackPlayerEvents,
+} from "react-native-track-player";
 
 export default function index() {
+  const [track, settrack] = useState<Track | null>();
   const [imageColors, setimageColors] = useState<ImageColorsResult>();
+  const [bgColor, setbgColor] = useState<string>("#000");
 
-  const getImageColors = async (url: any) => {
-    const response = await ImageColors.getColors(url);
-    setimageColors(response);
+  useTrackPlayerEvents(
+    [Event.PlaybackActiveTrackChanged, Event.MetadataCommonReceived],
+    async (event) => {
+      switch (event.type) {
+        case Event.PlaybackActiveTrackChanged:
+          const playingTrack = await TrackPlayer.getActiveTrack();
+          settrack(playingTrack);
+          break;
+      }
+    },
+  );
+
+  const getInitialTrack = async () => {
+    const playingTrack = await TrackPlayer.getActiveTrack();
+    settrack(playingTrack);
   };
 
   useEffect(() => {
-    getImageColors(playlistData[2].artwork);
+    getInitialTrack();
   }, []);
-  console.log();
+
+  const getImageColors = async () => {
+    const response =
+      track?.artwork && (await ImageColors.getColors(track?.artwork));
+    if (response) {
+      setimageColors(response);
+    }
+  };
+
+  useEffect(() => {
+    getImageColors();
+  }, [track]);
+
+  useEffect(() => {
+    imageColors
+      ? imageColors.platform === "ios"
+        ? setbgColor(imageColors.background)
+        : setbgColor(imageColors.dominant)
+      : setbgColor("#000");
+  }, [imageColors]);
 
   return (
     <View
       style={{
-        backgroundColor:
-          imageColors?.platform === "ios"
-            ? imageColors.background
-            : imageColors?.dominant,
+        backgroundColor: bgColor,
       }}
       className="h-full"
     >
       <View className="h-full p-4 flex-1 items-center justify-evenly">
-        <SongArtwork track={playlistData[2]} />
+        <SongArtwork track={track} />
         <View className="">
-          <SongInfo track={playlistData[2]} />
+          <SongInfo track={track} />
           <SongSlider />
           <PlayerControls />
         </View>
       </View>
-      <Stack.Screen options={{ headerShown: false }} />
+      <Stack.Screen
+        options={{ navigationBarColor: bgColor, presentation: "modal" }}
+      />
     </View>
   );
 }

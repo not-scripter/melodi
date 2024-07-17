@@ -1,7 +1,6 @@
 import React, { PropsWithChildren, useState } from "react";
 import { Image, Pressable, View } from "react-native";
-import ImageColors from "react-native-image-colors";
-import { Button, Text, useTheme } from "react-native-paper";
+import { Text, useTheme } from "react-native-paper";
 import { Track } from "react-native-track-player";
 
 type SongArtwordProps = PropsWithChildren<{
@@ -13,19 +12,20 @@ export default function SongArtwork({ track }: SongArtwordProps) {
 
   const [isInfoVisible, setisInfoVisible] = useState<boolean>(false);
 
-  async function getImageColors() {
-    const url = "https://i.imgur.com/68jyjZT.jpg";
-    const colosrs = await ImageColors.getColors(url);
-    console.log(colosrs);
-  }
-
   return (
     <View
       className="w-[85vw] h-[85vw] overflow-hidden relative"
       style={{ borderRadius: theme.roundness }}
     >
       <Pressable onLongPress={() => setisInfoVisible(!isInfoVisible)}>
-        <Image source={{ uri: track?.artwork }} className="w-full h-full" />
+        <Image
+          source={{
+            uri:
+              track?.artwork ||
+              "https://images.unsplash.com/photo-1532375810709-75b1da00537c?q=80&w=876&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          }}
+          className="w-full h-full"
+        />
         {isInfoVisible && (
           <View className="absolute w-full h-full bg-black/50 flex-1 items-center justify-center">
             <View>
