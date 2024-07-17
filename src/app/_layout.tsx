@@ -5,6 +5,7 @@ import TrackPlayer from "react-native-track-player";
 import { Text, View } from "react-native";
 import { useEffect, useState } from "react";
 import { addTrack, playbackService, setupPlayer } from "rntp-service";
+import { Material3ThemeProvider } from "@/components/providers/Material3ThemeProvider";
 
 export default function Layout() {
   const theme = useTheme();
@@ -30,7 +31,7 @@ export default function Layout() {
   }
 
   return (
-    <PaperProvider
+    <Material3ThemeProvider
       settings={{
         icon: (props: any) => <Ionicons {...props} />,
       }}
@@ -54,7 +55,7 @@ export default function Layout() {
         />
         {/* <Stack.Screen options={{ presentation: "modal" }} /> */}
       </View>
-    </PaperProvider>
+    </Material3ThemeProvider>
   );
 }
 
