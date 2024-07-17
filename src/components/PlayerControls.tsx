@@ -1,13 +1,14 @@
 import React from "react";
 import { View } from "react-native";
-import { IconButton, useTheme } from "react-native-paper";
+import { IconButton } from "react-native-paper";
 import TrackPlayer, {
   State,
   usePlaybackState,
 } from "react-native-track-player";
+import { useAppTheme } from "./providers/Material3ThemeProvider";
 
 export default function PlayerControls() {
-  const theme = useTheme();
+  const theme = useAppTheme();
 
   const playbackState = usePlaybackState();
 

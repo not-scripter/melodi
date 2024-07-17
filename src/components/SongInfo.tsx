@@ -1,14 +1,15 @@
-import { View, Pressable, Image } from "react-native";
 import React, { PropsWithChildren } from "react";
+import { View } from "react-native";
+import { Text } from "react-native-paper";
 import { Track } from "react-native-track-player";
-import { Text, useTheme } from "react-native-paper";
+import { useAppTheme } from "./providers/Material3ThemeProvider";
 
 type SongInfoProps = PropsWithChildren<{
   track: Track | null | undefined;
 }>;
 
 export default function SongInfo({ track }: SongInfoProps) {
-  const theme = useTheme();
+  const theme = useAppTheme();
 
   return (
     <View>

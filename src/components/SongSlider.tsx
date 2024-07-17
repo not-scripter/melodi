@@ -1,12 +1,12 @@
 import Slider from "@react-native-community/slider";
 import React from "react";
 import { Text, View } from "react-native";
-import { useTheme } from "react-native-paper";
 import { useProgress } from "react-native-track-player";
 import { seekTo } from "react-native-track-player/lib/src/trackPlayer";
+import { useAppTheme } from "./providers/Material3ThemeProvider";
 
 export default function SongSlider() {
-  const theme = useTheme();
+  const theme = useAppTheme();
   const { position, duration } = useProgress();
 
   return (

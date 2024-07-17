@@ -1,14 +1,15 @@
 import React, { PropsWithChildren, useState } from "react";
 import { Image, Pressable, View } from "react-native";
-import { Text, useTheme } from "react-native-paper";
+import { Text } from "react-native-paper";
 import { Track } from "react-native-track-player";
+import { useAppTheme } from "./providers/Material3ThemeProvider";
 
 type SongArtwordProps = PropsWithChildren<{
   track: Track | null | undefined;
 }>;
 
 export default function SongArtwork({ track }: SongArtwordProps) {
-  const theme = useTheme();
+  const theme = useAppTheme();
 
   const [isInfoVisible, setisInfoVisible] = useState<boolean>(false);
 

@@ -1,5 +1,9 @@
 import { playlistData } from "@/constants";
-import TrackPlayer, { Event, RepeatMode } from "react-native-track-player";
+import TrackPlayer, {
+  Event,
+  RepeatMode,
+  Capability,
+} from "react-native-track-player";
 
 export async function setupPlayer() {
   let isSetup = false;
@@ -10,8 +14,28 @@ export async function setupPlayer() {
     await TrackPlayer.setupPlayer();
     isSetup = true;
   } finally {
+    TrackPlayer.updateOptions({
+      capabilities: [
+        Capability.Play,
+        Capability.Pause,
+        Capability.SkipToNext,
+        Capability.SkipToPrevious,
+        Capability.Stop,
+      ],
+
+      compactCapabilities: [Capability.Play, Capability.Pause],
+
+      // playIcon: require('./play-icon.png'),
+      // pauseIcon: require('./pause-icon.png'),
+      // stopIcon: require('./stop-icon.png'),
+      // previousIcon: require('./previous-icon.png'),
+      // nextIcon: require('./next-icon.png'),
+      // icon: require('./notification-icon.png')
+    });
+
     return isSetup;
   }
+  //TEST:
 }
 
 export async function addTrack() {
