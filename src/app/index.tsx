@@ -1,10 +1,11 @@
+import { useAppTheme } from "@/components/providers/Material3ThemeProvider";
 import { Link } from "expo-router";
 import React from "react";
 import { ScrollView, View } from "react-native";
 import { Button, useTheme } from "react-native-paper";
 
 export default function index() {
-  const theme = useTheme();
+  const theme = useAppTheme();
 
   const getmusic = async () => {
     // const res = await getYtMusic("qnQCd_nZn_g");
