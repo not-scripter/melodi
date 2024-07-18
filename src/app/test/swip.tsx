@@ -35,8 +35,17 @@ export default function swip() {
       });
     })
     .onEnd((e) => {
-      console.log(y.value);
-      if (y.value < height / 2 || e.velocityY < -1000) {
+      if (e.velocityY < -500) {
+        y.value = withTiming(0, {
+          duration: 300,
+          easing: Easing.linear,
+        });
+      } else if (e.velocityY > 500) {
+        y.value = withTiming(height, {
+          duration: 200,
+          easing: Easing.linear,
+        });
+      } else if (y.value < height / 2) {
         y.value = withTiming(0, {
           duration: 300,
           easing: Easing.linear,
