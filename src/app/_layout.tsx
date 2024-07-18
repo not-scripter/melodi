@@ -80,8 +80,10 @@ export default function Layout() {
               fontWeight: "bold",
             },
             headerTitleAlign: "center",
+            headerShown: false,
           }}
         >
+          <Stack.Screen name="index" />
           {/* <Stack.Screen */}
           {/*   name="player/index" */}
           {/*   options={{ */}

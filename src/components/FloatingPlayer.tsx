@@ -58,10 +58,7 @@ export default function FloatingPlayer() {
 
   if (track) {
     return (
-      <View
-        className="w-full absolute bottom-0 flex-row items-center justify-between px-4 py-2"
-        style={{ backgroundColor: bgColor }}
-      >
+      <View className="w-full h-full flex-row items-center justify-between px-4 py-2">
         <View className="flex-row items-center">
           <Image
             source={{ uri: track?.artwork }}

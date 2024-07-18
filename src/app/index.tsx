@@ -1,9 +1,10 @@
 import { useAppTheme } from "@/components/providers/Material3ThemeProvider";
 import { Link, useRouter } from "expo-router";
 import React from "react";
-import { ScrollView, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import { Button, useTheme } from "react-native-paper";
 import FloatingPlayer from "@/components/FloatingPlayer";
+import Player from "@/components/Player";
 
 export default function index() {
   const theme = useAppTheme();
@@ -21,7 +22,7 @@ export default function index() {
 
   return (
     <View
-      className="h-full flex-1 items-center justify-center gap-2"
+      className="relative h-full"
       style={{ backgroundColor: theme.colors.onBackground }}
     >
       <Link href="player" asChild>
@@ -33,7 +34,11 @@ export default function index() {
       <Link href="/test/swip">
         <Button mode="elevated">Swip test</Button>
       </Link>
-      <FloatingPlayer />
+      <Link href="/test/player">
+        <Button mode="elevated">test player</Button>
+      </Link>
+      {/* <FloatingPlayer /> */}
+      <Player />
     </View>
   );
 }

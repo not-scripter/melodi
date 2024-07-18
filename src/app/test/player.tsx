@@ -1,5 +1,4 @@
 import { View, Text, Dimensions } from "react-native";
-import React from "react";
 import {
   Gesture,
   GestureDetector,
@@ -15,8 +14,38 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import PlayerControls from "@/components/PlayerControls";
+import SongArtwork from "@/components/SongArtwork";
+import SongInfo from "@/components/SongInfo";
+import SongSlider from "@/components/SongSlider";
+import { Stack } from "expo-router";
+import React, { useEffect, useState } from "react";
+import ImageColors, { ImageColorsResult } from "react-native-image-colors";
+import { Track, useActiveTrack } from "react-native-track-player";
+import FloatingPlayer from "@/components/FloatingPlayer";
 
-export default function swip() {
+export default function player() {
+  const [imageColors, setimageColors] = useState<ImageColorsResult>();
+  const bgColor = imageColors
+    ? imageColors.platform === "ios"
+      ? imageColors.background
+      : imageColors.dominant
+    : "#000";
+
+  const track: Track | undefined = useActiveTrack();
+
+  const getImageColors = async () => {
+    const response =
+      track?.artwork && (await ImageColors.getColors(track?.artwork));
+    if (response) {
+      setimageColors(response);
+    }
+  };
+
+  useEffect(() => {
+    getImageColors();
+  }, [track]);
+
   const { height } = Dimensions.get("screen");
 
   const { bottom } = useSafeAreaInsets();
@@ -92,28 +121,27 @@ export default function swip() {
     .runOnJS(true);
 
   return (
-    <>
-      <View className="h-full w-full bg-pink-200">
-        <Text className="text-3xl text-center">Home</Text>
-      </View>
-      <Animated.View
-        style={[animatedPlayerStyle]}
-        className="h-full w-full bg-blue-300 absolute bottom-0"
-      >
-        <GestureDetector gesture={maximiseHandler}>
-          <Animated.View className="bg-green-300 w-full h-full -top-20 relative">
-            <Animated.View
-              className="bg-purple-300 h-20"
-              style={floatingOpacity}
-            >
-              <Text className="text-center text-3xl">Floating Player</Text>
-            </Animated.View>
-            <View className="h-full flex-1 items-center justify-center absolute">
-              <Text className="text-center text-3xl">Full Player</Text>
-            </View>
+    <Animated.View
+      style={[animatedPlayerStyle]}
+      className="h-full w-full bg-blue-300 absolute bottom-0"
+    >
+      <GestureDetector gesture={maximiseHandler}>
+        <Animated.View className="bg-green-300 w-full h-full -top-20 relative">
+          <Animated.View className="bg-purple-300 h-20" style={floatingOpacity}>
+            <FloatingPlayer />
           </Animated.View>
-        </GestureDetector>
-      </Animated.View>
-    </>
+          <View className="h-full flex-1 items-center justify-center absolute">
+            <View className="h-full p-4 flex-1 items-center justify-evenly">
+              <SongArtwork track={track} />
+              <View className="">
+                <SongInfo track={track} />
+                <SongSlider />
+                <PlayerControls />
+              </View>
+            </View>
+          </View>
+        </Animated.View>
+      </GestureDetector>
+    </Animated.View>
   );
 }
