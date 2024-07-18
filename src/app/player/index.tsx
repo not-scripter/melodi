@@ -45,9 +45,6 @@ export default function index() {
           <PlayerControls />
         </View>
       </View>
-      <Stack.Screen
-        options={{ navigationBarColor: bgColor, presentation: "modal" }}
-      />
     </View>
   );
 }
