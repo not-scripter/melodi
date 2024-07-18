@@ -19,7 +19,7 @@ export default function swip() {
   const animatedPlayerStyle = useAnimatedStyle(() => ({
     transform: [
       {
-        translateY: withTiming(y.value - height, {
+        translateY: withTiming(y.value, {
           duration: 300,
           easing: Easing.linear,
         }),
@@ -50,12 +50,18 @@ export default function swip() {
     .runOnJS(true);
 
   return (
-    <Animated.View style={[animatedPlayerStyle]}>
-      <View className="h-full w-full bg-blue-300" style={{}}>
-        <GestureDetector gesture={maximiseHandler}>
-          <Animated.View className="bg-red-300 absolute w-full h-40 bottom-0 left-0 translate-y-20" />
-        </GestureDetector>
+    <>
+      <View className="h-full w-full bg-pink-200">
+        <Text className="text-3xl text-center">Home</Text>
       </View>
-    </Animated.View>
+      <Animated.View
+        style={[animatedPlayerStyle]}
+        className="h-full w-full bg-blue-300 absolute bottom-0"
+      >
+        <GestureDetector gesture={maximiseHandler}>
+          <Animated.View className="bg-green-300 absolute w-full h-40 top-0 -translate-y-20" />
+        </GestureDetector>
+      </Animated.View>
+    </>
   );
 }
