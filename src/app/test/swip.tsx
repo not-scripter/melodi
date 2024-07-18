@@ -8,15 +8,25 @@ import {
 import Animated, {
   Easing,
   Keyframe,
+  ReduceMotion,
   useAnimatedStyle,
   useSharedValue,
+  withSpring,
   withTiming,
 } from "react-native-reanimated";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function swip() {
   const { height } = Dimensions.get("screen");
+
+  const { bottom } = useSafeAreaInsets();
+
   const y = useSharedValue(height);
-  const floatingOpacity = useSharedValue(1);
+
+  const o = useSharedValue(y.value / height);
+  const floatingOpacity = useAnimatedStyle(() => ({
+    opacity: o.value,
+  }));
 
   const animatedPlayerStyle = useAnimatedStyle(() => ({
     transform: [
@@ -31,37 +41,52 @@ export default function swip() {
 
   const maximiseHandler = Gesture.Pan()
     .onUpdate((e) => {
-      y.value = withTiming(e.absoluteY, {
-        duration: 0,
-        easing: Easing.linear,
-      });
+      y.value = e.absoluteY;
+      // y.value = withTiming(e.absoluteY, {
+      //   duration: 100,
+      //   easing: Easing.linear,
+      // });
+      o.value = e.absoluteY / height;
     })
     .onEnd((e) => {
       if (e.velocityY < -500) {
         y.value = withTiming(80, {
-          duration: 300,
+          duration: 100,
+          easing: Easing.linear,
+        });
+
+        o.value = withTiming(0, {
+          duration: 500,
           easing: Easing.linear,
         });
       } else if (e.velocityY > 500) {
         y.value = withTiming(height, {
-          duration: 200,
+          duration: 100,
+          easing: Easing.linear,
+        });
+
+        o.value = withTiming(1, {
+          duration: 500,
           easing: Easing.linear,
         });
       } else if (y.value < height / 2) {
         y.value = withTiming(80, {
-          duration: 300,
+          duration: 100,
           easing: Easing.linear,
         });
+        o.value = 0;
       } else if (y.value > height / 2) {
         y.value = withTiming(height, {
-          duration: 200,
+          duration: 100,
           easing: Easing.linear,
         });
+        o.value = 1;
       } else {
         y.value = withTiming(height, {
-          duration: 200,
+          duration: 100,
           easing: Easing.linear,
         });
+        o.value = 1;
       }
     })
     .runOnJS(true);
@@ -76,10 +101,13 @@ export default function swip() {
         className="h-full w-full bg-blue-300 absolute bottom-0"
       >
         <GestureDetector gesture={maximiseHandler}>
-          <Animated.View className="bg-green-300/40 w-full h-full -top-20 relative">
-            <View className="bg-purple-300/20 h-20">
+          <Animated.View className="bg-green-300 w-full h-full -top-20 relative">
+            <Animated.View
+              className="bg-purple-300 h-20"
+              style={floatingOpacity}
+            >
               <Text className="text-center text-3xl">Floating Player</Text>
-            </View>
+            </Animated.View>
             <View className="h-full flex-1 items-center justify-center absolute">
               <Text className="text-center text-3xl">Full Player</Text>
             </View>
