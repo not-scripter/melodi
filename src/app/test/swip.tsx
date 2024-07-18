@@ -36,7 +36,7 @@ export default function swip() {
     })
     .onEnd((e) => {
       if (e.velocityY < -500) {
-        y.value = withTiming(0, {
+        y.value = withTiming(80, {
           duration: 300,
           easing: Easing.linear,
         });
@@ -46,7 +46,7 @@ export default function swip() {
           easing: Easing.linear,
         });
       } else if (y.value < height / 2) {
-        y.value = withTiming(0, {
+        y.value = withTiming(80, {
           duration: 300,
           easing: Easing.linear,
         });
@@ -73,13 +73,13 @@ export default function swip() {
         style={[animatedPlayerStyle]}
         className="h-full w-full bg-blue-300 absolute bottom-0"
       >
-        <View className="h-full flex-1 items-center justify-center">
-          <Text className="text-center text-3xl">Full Player</Text>
-        </View>
         <GestureDetector gesture={maximiseHandler}>
-          <Animated.View className="bg-green-300 absolute w-full h-40 top-0 -translate-y-20">
-            <View className="bg-purple-300 h-20">
+          <Animated.View className="bg-green-300/40 w-full h-full -top-20 relative">
+            <View className="bg-purple-300/20 h-20">
               <Text className="text-center text-3xl">Floating Player</Text>
+            </View>
+            <View className="h-full flex-1 items-center justify-center absolute">
+              <Text className="text-center text-3xl">Full Player</Text>
             </View>
           </Animated.View>
         </GestureDetector>
