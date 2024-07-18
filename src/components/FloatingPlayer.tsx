@@ -1,38 +1,19 @@
-import { View, Text, Image, ScrollView } from "react-native";
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { Image, Text, View } from "react-native";
+import { IconButton } from "react-native-paper";
 import TrackPlayer, {
   State,
   Track,
-  useActiveTrack,
   usePlaybackState,
 } from "react-native-track-player";
-import { Link } from "expo-router";
-import { IconButton } from "react-native-paper";
 import { useAppTheme } from "./providers/Material3ThemeProvider";
-import ImageColors, { ImageColorsResult } from "react-native-image-colors";
 
-export default function FloatingPlayer() {
+type FloatingPlayerProps = {
+  track: Track | undefined;
+};
+
+export default function FloatingPlayer({ track }: FloatingPlayerProps) {
   const theme = useAppTheme();
-  const [imageColors, setimageColors] = useState<ImageColorsResult>();
-  const bgColor = imageColors
-    ? imageColors.platform === "ios"
-      ? imageColors.background
-      : imageColors.dominant
-    : "#000";
-
-  const track: Track | undefined = useActiveTrack();
-
-  const getImageColors = async () => {
-    const response =
-      track?.artwork && (await ImageColors.getColors(track?.artwork));
-    if (response) {
-      setimageColors(response);
-    }
-  };
-
-  useEffect(() => {
-    getImageColors();
-  }, [track]);
 
   const playbackState = usePlaybackState();
 

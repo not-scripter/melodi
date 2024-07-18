@@ -1,29 +1,17 @@
-import { View, Text, Dimensions } from "react-native";
-import {
-  Gesture,
-  GestureDetector,
-  PanGestureHandler,
-} from "react-native-gesture-handler";
+import FloatingPlayer from "@/components/FloatingPlayer";
+import FullPlayer from "@/components/FullPlayer";
+import React, { useEffect, useState } from "react";
+import { Dimensions, View } from "react-native";
+import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import ImageColors, { ImageColorsResult } from "react-native-image-colors";
 import Animated, {
   Easing,
-  Keyframe,
-  ReduceMotion,
   useAnimatedStyle,
   useSharedValue,
-  withSpring,
   withTiming,
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import PlayerControls from "@/components/PlayerControls";
-import SongArtwork from "@/components/SongArtwork";
-import SongInfo from "@/components/SongInfo";
-import SongSlider from "@/components/SongSlider";
-import { Stack } from "expo-router";
-import React, { useEffect, useState } from "react";
-import ImageColors, { ImageColorsResult } from "react-native-image-colors";
 import { Track, useActiveTrack } from "react-native-track-player";
-import FloatingPlayer from "@/components/FloatingPlayer";
-import FullPlayer from "@/components/FullPlayer";
 
 export default function Player() {
   const [imageColors, setimageColors] = useState<ImageColorsResult>();
@@ -131,8 +119,8 @@ export default function Player() {
           className="w-full h-full -top-20 relative"
           style={{ backgroundColor: bgColor }}
         >
-          <Animated.View className="h-20" style={[floatingOpacity]}>
-            <FloatingPlayer />
+          <Animated.View className="h-20 pb-4" style={[floatingOpacity]}>
+            <FloatingPlayer track={track} />
           </Animated.View>
           <View className="h-full flex-1 items-center justify-center absolute">
             <FullPlayer track={track} />
