@@ -7,6 +7,7 @@ import {
 } from "react-native-gesture-handler";
 import Animated, {
   Easing,
+  Keyframe,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
@@ -15,6 +16,7 @@ import Animated, {
 export default function swip() {
   const { height } = Dimensions.get("screen");
   const y = useSharedValue(height);
+  const floatingOpacity = useSharedValue(1);
 
   const animatedPlayerStyle = useAnimatedStyle(() => ({
     transform: [
