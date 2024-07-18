@@ -16,8 +16,8 @@ import { addTrack, playbackService, setupPlayer } from "rntp-service";
 export default function Layout() {
   const theme = useAppTheme();
 
-  const insets = useSafeAreaInsets();
-  console.log(insets);
+  // const insets = useSafeAreaInsets();
+  // console.log(insets);
 
   const [isPlayerReady, setisPlayerReady] = useState(false);
 
@@ -80,17 +80,22 @@ export default function Layout() {
               fontWeight: "bold",
             },
             headerTitleAlign: "center",
-            navigationBarColor: "#FFFFFF00",
           }}
         >
+          {/* <Stack.Screen */}
+          {/*   name="player/index" */}
+          {/*   options={{ */}
+          {/*     presentation: "card", */}
+          {/*     gestureEnabled: true, */}
+          {/*     gestureDirection: "horizontal", */}
+          {/*     animation: "slide_from_bottom", */}
+          {/*     animationDuration: 2000, */}
+          {/*     headerShown: false, */}
+          {/*   }} */}
+          {/* /> */}
           <Stack.Screen
-            name="player/index"
+            name="test/swip"
             options={{
-              presentation: "card",
-              gestureEnabled: true,
-              gestureDirection: "horizontal",
-              animation: "slide_from_bottom",
-              animationDuration: 2000,
               headerShown: false,
             }}
           />
