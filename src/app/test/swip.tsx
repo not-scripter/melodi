@@ -35,9 +35,15 @@ export default function swip() {
       });
     })
     .onEnd((e) => {
-      if (y.value > height / 2 || e.velocityY < -1000) {
+      console.log(y.value);
+      if (y.value < height / 2 || e.velocityY < -1000) {
         y.value = withTiming(0, {
           duration: 300,
+          easing: Easing.linear,
+        });
+      } else if (y.value > height / 2) {
+        y.value = withTiming(height, {
+          duration: 200,
           easing: Easing.linear,
         });
       } else {
@@ -58,8 +64,15 @@ export default function swip() {
         style={[animatedPlayerStyle]}
         className="h-full w-full bg-blue-300 absolute bottom-0"
       >
+        <View className="h-full flex-1 items-center justify-center">
+          <Text className="text-center text-3xl">Full Player</Text>
+        </View>
         <GestureDetector gesture={maximiseHandler}>
-          <Animated.View className="bg-green-300 absolute w-full h-40 top-0 -translate-y-20" />
+          <Animated.View className="bg-green-300 absolute w-full h-40 top-0 -translate-y-20">
+            <View className="bg-purple-300 h-20">
+              <Text className="text-center text-3xl">Floating Player</Text>
+            </View>
+          </Animated.View>
         </GestureDetector>
       </Animated.View>
     </>
