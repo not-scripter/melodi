@@ -1,100 +1,62 @@
-import { View, Text, Dimensions, Modal } from "react-native";
+import { View, Text, Dimensions } from "react-native";
 import React from "react";
 import {
   Gesture,
   GestureDetector,
-  Swipeable,
+  PanGestureHandler,
 } from "react-native-gesture-handler";
 import Animated, {
+  Easing,
+  useAnimatedGestureHandler,
   useAnimatedStyle,
   useSharedValue,
-  withSpring,
-  WithSpringConfig,
+  withTiming,
 } from "react-native-reanimated";
-import Stack from "expo-router/stack";
 
 export default function swip() {
   const { height } = Dimensions.get("screen");
+  const y = useSharedValue(0);
 
-  const minHeight = 0;
-  const maxHeight = height;
-  const expandedHeight = height * 0.8;
-
-  const position = useSharedValue("minimised");
-  const playerHeight = useSharedValue(-minHeight);
-  const navHeight = useSharedValue(0);
-
-  const dragBuffer = 40;
-
-  function clamp(val: any, min: any, max: any) {
-    return Math.min(Math.max(val, min), max);
-  }
-
-  const springConfig: WithSpringConfig = {
-    damping: 50,
-    mass: 0.3,
-    stiffness: 120,
-    overshootClamping: true,
-    restSpeedThreshold: 0.3,
-    restDisplacementThreshold: 0.3,
-  };
-
-  const pan = Gesture.Pan()
-    // .onUpdate((e) => {
-    //   playerHeight.value = e.translationY;
-    // })
-    // .onEnd((e) => {
-    //   const shouldMinimise =
-    //     position.value === "expanded" &&
-    //     -playerHeight.value < expandedHeight - dragBuffer;
-    //   // Snap to maximised position if the sheet is dragged up from expanded position
-    //   const shouldMaximise =
-    //     position.value === "expanded" &&
-    //     -playerHeight.value > expandedHeight + dragBuffer;
-    //   // Update the sheet's position with spring animation
-    //   //
-    //   // if (shouldExpand) {
-    //   //   navHeight.value = withSpring(0, springConfig);
-    //   //   playerHeight.value = withSpring(-expandedHeight, springConfig);
-    //   //   position.value = "expanded";
-    //   if (shouldMaximise) {
-    //     navHeight.value = withSpring(0, springConfig);
-    //     playerHeight.value = withSpring(-maxHeight, springConfig);
-    //     position.value = "maximised";
-    //   } else if (shouldMinimise) {
-    //     navHeight.value = withSpring(0, springConfig);
-    //     playerHeight.value = withSpring(-minHeight, springConfig);
-    //     position.value = "minimised";
-    //   } else {
-    //     playerHeight.value = withSpring(
-    //       position.value === "minimised"
-    //         ? -minHeight
-    //         : position.value === "maximised"
-    //           ? -maxHeight
-    //           : -minHeight,
-    //       springConfig,
-    //     );
-    //   }
-    // })
-    .runOnJS(true);
-
-  const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ translateY: playerHeight.value - 100 }],
+  const animatedPlayerStyle = useAnimatedStyle(() => ({
+    transform: [
+      {
+        translateY: withTiming(y.value - height, {
+          duration: 300,
+          easing: Easing.linear,
+        }),
+      },
+    ],
   }));
 
+  const maximiseHandler = Gesture.Pan()
+    .onUpdate((e) => {
+      y.value = withTiming(e.absoluteY, {
+        duration: 0,
+        easing: Easing.linear,
+      });
+    })
+    .onEnd((e) => {
+      if (y.value > height / 2 || e.velocityY < -1000) {
+        y.value = withTiming(0, {
+          duration: 300,
+          easing: Easing.linear,
+        });
+      } else {
+        y.value = withTiming(height, {
+          duration: 200,
+          easing: Easing.linear,
+        });
+      }
+    })
+    .runOnJS(true);
+
   return (
-    <GestureDetector gesture={pan}>
-      <View className="h-full relative">
-        <Animated.View
-          style={[{}, animatedStyle]}
-          className="bg-red-300/50 w-full h-20 absolute"
-        />
-        <Animated.View
-          style={[{}, animatedStyle]}
-          className="bg-blue-300/50 w-full h-full absolute"
-        />
-        <Stack.Screen options={{ headerShown: false }} />
+    <Animated.View style={[animatedPlayerStyle]}>
+      <View className="h-full w-full bg-blue-300" style={{}}>
+        <GestureDetector gesture={maximiseHandler}>
+          <Animated.View className="bg-red-300 absolute w-full h-40 bottom-0 left-0 translate-y-20" />
+        </GestureDetector>
       </View>
-    </GestureDetector>
+    </Animated.View>
   );
 }
