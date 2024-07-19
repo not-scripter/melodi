@@ -36,8 +36,8 @@ export default function index() {
     if (activeTrack) {
       // await TrackPlayer.remove(activeTrack);
     }
-    await TrackPlayer.add(track);
-    await TrackPlayer.play();
+    TrackPlayer.add(track);
+    TrackPlayer.play();
   };
 
   return (
@@ -58,7 +58,6 @@ export default function index() {
         ItemSeparatorComponent={Divider}
         keyExtractor={(track) => track.id}
       />
-      {/* <FloatingPlayer /> */}
       <Player />
     </View>
   );

@@ -19,6 +19,7 @@ export async function setupPlayer() {
         Capability.SkipToNext,
         Capability.SkipToPrevious,
         Capability.Stop,
+        Capability.SeekTo,
       ],
       compactCapabilities: [Capability.Play, Capability.Pause],
     });
@@ -45,5 +46,8 @@ export async function playbackService() {
   });
   TrackPlayer.addEventListener(Event.RemoteNext, () => {
     TrackPlayer.skipToNext();
+  });
+  TrackPlayer.addEventListener(Event.RemoteSeek, (to) => {
+    TrackPlayer.seekTo(to.position);
   });
 }
