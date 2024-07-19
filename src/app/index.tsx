@@ -1,6 +1,6 @@
 import { useAppTheme } from "@/components/providers/Material3ThemeProvider";
 import { Link, useRouter } from "expo-router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FlatList,
   Pressable,
@@ -15,7 +15,13 @@ import Player from "@/components/Player";
 import SongItem from "@/components/SongItem";
 import { playlistData } from "@/constants";
 import SongInfo from "@/components/SongInfo";
-import TrackPlayer, { Track } from "react-native-track-player";
+import TrackPlayer, {
+  Event,
+  RepeatMode,
+  Track,
+  useActiveTrack,
+  useTrackPlayerEvents,
+} from "react-native-track-player";
 import AvatarText from "react-native-paper/lib/typescript/components/Avatar/AvatarText";
 
 export default function index() {
@@ -31,13 +37,19 @@ export default function index() {
     // console.log(music);
   };
 
+  const [activestate, setactivestate] = useState<number>();
+  const test = useTrackPlayerEvents(
+    [Event.MetadataCommonReceived, Event.PlaybackActiveTrackChanged],
+    async () => {
+      const res = await TrackPlayer.getActiveTrackIndex();
+      setactivestate(res);
+    },
+  );
+
   const handlePlay = async (track: Track) => {
-    const activeTrack = await TrackPlayer.getActiveTrack();
-    if (activeTrack) {
-      // await TrackPlayer.remove(activeTrack);
-    }
-    TrackPlayer.add(track);
-    TrackPlayer.play();
+    await TrackPlayer.add(track, activestate);
+    await TrackPlayer.skipToPrevious();
+    await TrackPlayer.play();
   };
 
   return (

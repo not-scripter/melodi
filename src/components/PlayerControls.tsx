@@ -13,9 +13,9 @@ export default function PlayerControls() {
   const playbackState = usePlaybackState();
 
   const togglePlayback = async (playbackState: State | undefined) => {
-    const currentTrack = await TrackPlayer.getActiveTrackIndex();
+    const activeTrack = await TrackPlayer.getActiveTrackIndex();
 
-    if (currentTrack !== null) {
+    if (activeTrack !== null) {
       if (playbackState === State.Paused || playbackState === State.Ready) {
         await TrackPlayer.play();
       } else {
