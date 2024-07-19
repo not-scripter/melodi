@@ -5,6 +5,7 @@ import { Dimensions, Pressable, View } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import ImageColors, { ImageColorsResult } from "react-native-image-colors";
 import Animated, {
+  ReduceMotion,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
@@ -43,7 +44,9 @@ export default function Player() {
   const o = useSharedValue(1);
   const [state, setstate] = useState("minimized");
   const floatingOpacity = useAnimatedStyle(() => ({
-    opacity: withSpring(o.value),
+    opacity: withSpring(o.value, {
+      reduceMotion: ReduceMotion.Never,
+    }),
   }));
 
   const animatedPlayerStyle = useAnimatedStyle(() => ({
@@ -51,6 +54,7 @@ export default function Player() {
       {
         translateY: withSpring(y.value, {
           damping: 20,
+          reduceMotion: ReduceMotion.Never,
         }),
       },
     ],
