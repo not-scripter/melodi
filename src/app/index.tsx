@@ -38,7 +38,8 @@ export default function index() {
   };
 
   const [activestate, setactivestate] = useState<number>();
-  const test = useTrackPlayerEvents(
+
+  useTrackPlayerEvents(
     [Event.MetadataCommonReceived, Event.PlaybackActiveTrackChanged],
     async () => {
       const res = await TrackPlayer.getActiveTrackIndex();
@@ -59,6 +60,12 @@ export default function index() {
     >
       <Appbar.Header>
         <Appbar.Content title="Home" />
+        <Appbar.Action
+          onPress={() => {
+            TrackPlayer.reset();
+          }}
+          icon="close"
+        />
       </Appbar.Header>
       <FlatList
         data={playlistData}
