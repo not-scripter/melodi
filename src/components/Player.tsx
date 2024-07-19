@@ -68,8 +68,13 @@ export default function Player() {
 
   const maximiseHandler = Gesture.Pan()
     .onUpdate((e) => {
-      y.value = e.absoluteY;
-      o.value = e.absoluteY / height;
+      if (state === "minimized") {
+        y.value = e.absoluteY;
+        o.value = e.absoluteY / height;
+      } else {
+        y.value = e.translationY + 80;
+        o.value = 0;
+      }
     })
     .onEnd((e) => {
       if (e.velocityY < -500) {
