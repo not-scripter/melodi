@@ -2,7 +2,7 @@ import { useAppTheme } from "@/components/providers/Material3ThemeProvider";
 import { Link, useRouter } from "expo-router";
 import React from "react";
 import { ScrollView, Text, View } from "react-native";
-import { Button, useTheme } from "react-native-paper";
+import { Appbar, Button, useTheme } from "react-native-paper";
 import FloatingPlayer from "@/components/FloatingPlayer";
 import Player from "@/components/Player";
 
@@ -25,6 +25,9 @@ export default function index() {
       className="relative h-full"
       style={{ backgroundColor: theme.colors.onBackground }}
     >
+      <Appbar.Header>
+        <Appbar.Content title="Home" />
+      </Appbar.Header>
       <Link href="player" asChild>
         <Button mode="elevated">player</Button>
       </Link>

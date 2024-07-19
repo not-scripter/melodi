@@ -34,8 +34,6 @@ export default function FloatingPlayer({ track }: FloatingPlayerProps) {
   const skipToNext = async () => {
     await TrackPlayer.skipToNext();
   };
-  const setFavourite = async () => {};
-  const setShuffle = async () => {};
 
   if (track) {
     return (
