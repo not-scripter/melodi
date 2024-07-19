@@ -1,18 +1,13 @@
 import FloatingPlayer from "@/components/FloatingPlayer";
 import FullPlayer from "@/components/FullPlayer";
-import { hasDarkPseudoClass } from "nativewind/dist/utils/selector";
 import React, { useEffect, useState } from "react";
 import { Dimensions, Pressable, View } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import ImageColors, { ImageColorsResult } from "react-native-image-colors";
 import Animated, {
-  Easing,
   useAnimatedStyle,
   useSharedValue,
-  withTiming,
   withSpring,
-  WithSpringConfig,
-  ReduceMotion,
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Track, useActiveTrack } from "react-native-track-player";
