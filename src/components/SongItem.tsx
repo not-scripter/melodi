@@ -10,13 +10,6 @@ type SongItemsProps = {
 
 export default function SongItem({ track }: SongItemsProps) {
   const theme = useAppTheme();
-  // const track = playlistData[2];
-
-  if (!track) {
-    <View>
-      <Text>Track Not Found</Text>
-    </View>;
-  }
 
   return (
     <View className="flex-row items-center p-4">

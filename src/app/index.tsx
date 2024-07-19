@@ -1,6 +1,6 @@
 import { useAppTheme } from "@/components/providers/Material3ThemeProvider";
 import { Link, useRouter } from "expo-router";
-import React from "react";
+import React, { useState } from "react";
 import {
   FlatList,
   Pressable,
@@ -16,6 +16,7 @@ import SongItem from "@/components/SongItem";
 import { playlistData } from "@/constants";
 import SongInfo from "@/components/SongInfo";
 import TrackPlayer, { Track } from "react-native-track-player";
+import AvatarText from "react-native-paper/lib/typescript/components/Avatar/AvatarText";
 
 export default function index() {
   const theme = useAppTheme();
@@ -29,10 +30,13 @@ export default function index() {
     //
     // console.log(music);
   };
-  const handlePlay = async (track: Track) => {
-    await TrackPlayer.add(track);
-    // await TrackPlayer.load(track);
 
+  const handlePlay = async (track: Track) => {
+    const activeTrack = await TrackPlayer.getActiveTrack();
+    if (activeTrack) {
+      // await TrackPlayer.remove(activeTrack);
+    }
+    await TrackPlayer.add(track);
     await TrackPlayer.play();
   };
 

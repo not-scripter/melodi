@@ -112,7 +112,7 @@ export default function Player() {
     >
       <GestureDetector gesture={maximiseHandler}>
         <Animated.View
-          className="w-full h-full -top-20 relative"
+          className="w-full h-full -top-20 relative transition ease-in-out delay-500"
           style={{ backgroundColor: bgColor }}
         >
           <Pressable onPress={handleTap}>
