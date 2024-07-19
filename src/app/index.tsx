@@ -1,14 +1,24 @@
 import { useAppTheme } from "@/components/providers/Material3ThemeProvider";
 import { Link, useRouter } from "expo-router";
 import React from "react";
-import { ScrollView, Text, View } from "react-native";
-import { Appbar, Button, useTheme } from "react-native-paper";
+import {
+  FlatList,
+  Pressable,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { Appbar, Button, Divider } from "react-native-paper";
 import FloatingPlayer from "@/components/FloatingPlayer";
 import Player from "@/components/Player";
+import SongItem from "@/components/SongItem";
+import { playlistData } from "@/constants";
+import SongInfo from "@/components/SongInfo";
+import TrackPlayer, { Track } from "react-native-track-player";
 
 export default function index() {
   const theme = useAppTheme();
-  const router = useRouter();
 
   const getmusic = async () => {
     // const res = await getYtMusic("qnQCd_nZn_g");
@@ -19,6 +29,12 @@ export default function index() {
     //
     // console.log(music);
   };
+  const handlePlay = async (track: Track) => {
+    await TrackPlayer.add(track);
+    // await TrackPlayer.load(track);
+
+    await TrackPlayer.play();
+  };
 
   return (
     <View
@@ -28,18 +44,16 @@ export default function index() {
       <Appbar.Header>
         <Appbar.Content title="Home" />
       </Appbar.Header>
-      <Link href="player" asChild>
-        <Button mode="elevated">player</Button>
-      </Link>
-      <Link href="/test/pan">
-        <Button mode="elevated">Pan test</Button>
-      </Link>
-      <Link href="/test/swip">
-        <Button mode="elevated">Swip test</Button>
-      </Link>
-      <Link href="/test/player">
-        <Button mode="elevated">test player</Button>
-      </Link>
+      <FlatList
+        data={playlistData}
+        renderItem={({ item }) => (
+          <Pressable onPress={() => handlePlay(item)}>
+            <SongItem track={item} />
+          </Pressable>
+        )}
+        ItemSeparatorComponent={Divider}
+        keyExtractor={(track) => track.id}
+      />
       {/* <FloatingPlayer /> */}
       <Player />
     </View>

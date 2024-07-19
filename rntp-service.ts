@@ -12,9 +12,7 @@ export async function setupPlayer() {
     isSetup = true;
   } catch (error) {
     await TrackPlayer.setupPlayer();
-    isSetup = true;
-  } finally {
-    TrackPlayer.updateOptions({
+    await TrackPlayer.updateOptions({
       capabilities: [
         Capability.Play,
         Capability.Pause,
@@ -22,20 +20,12 @@ export async function setupPlayer() {
         Capability.SkipToPrevious,
         Capability.Stop,
       ],
-
       compactCapabilities: [Capability.Play, Capability.Pause],
-
-      // playIcon: require('./play-icon.png'),
-      // pauseIcon: require('./pause-icon.png'),
-      // stopIcon: require('./stop-icon.png'),
-      // previousIcon: require('./previous-icon.png'),
-      // nextIcon: require('./next-icon.png'),
-      // icon: require('./notification-icon.png')
     });
+    isSetup = true;
 
     return isSetup;
   }
-  //TEST:
 }
 
 export async function addTrack() {

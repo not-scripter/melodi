@@ -3,7 +3,8 @@ import FullPlayer from "@/components/FullPlayer";
 import React, { useEffect, useState } from "react";
 import { Dimensions, Pressable, View } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
-import ImageColors, { ImageColorsResult } from "react-native-image-colors";
+import ImageColors from "react-native-image-colors";
+import { ImageColorsResult } from "react-native-image-colors/lib/typescript/types";
 import Animated, {
   ReduceMotion,
   useAnimatedStyle,
