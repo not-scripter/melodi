@@ -61,14 +61,14 @@ export default function Layout() {
   }
 
   return (
-    <GestureHandlerRootView
-      style={{ backgroundColor: theme.colors.onBackground }}
-      className="h-full"
+    <Material3ThemeProvider
+      settings={{
+        icon: (props: any) => <Ionicons {...props} />,
+      }}
     >
-      <Material3ThemeProvider
-        settings={{
-          icon: (props: any) => <Ionicons {...props} />,
-        }}
+      <GestureHandlerRootView
+        style={{ backgroundColor: theme.colors.onBackground }}
+        className="h-full"
       >
         <Stack
           screenOptions={{
@@ -84,30 +84,12 @@ export default function Layout() {
           }}
         >
           <Stack.Screen name="index" />
-          {/* <Stack.Screen */}
-          {/*   name="player/index" */}
-          {/*   options={{ */}
-          {/*     presentation: "card", */}
-          {/*     gestureEnabled: true, */}
-          {/*     gestureDirection: "horizontal", */}
-          {/*     animation: "slide_from_bottom", */}
-          {/*     animationDuration: 2000, */}
-          {/*     headerShown: false, */}
-          {/*   }} */}
-          {/* /> */}
-          <Stack.Screen
-            name="test/swip"
-            options={{
-              headerShown: false,
-            }}
-          />
+          <Stack.Screen name="test/swip" />
         </Stack>
-        {/* <Stack.Screen options={{ presentation: "modal" }} /> */}
-      </Material3ThemeProvider>
-    </GestureHandlerRootView>
+      </GestureHandlerRootView>
+    </Material3ThemeProvider>
   );
 }
-// navigationBarColor: track ? bgColor : theme.colors.onBackground,
 
 // AppRegistry.registerComponent(...);
 TrackPlayer.registerPlaybackService(() => playbackService);

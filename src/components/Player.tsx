@@ -2,7 +2,7 @@ import FloatingPlayer from "@/components/FloatingPlayer";
 import FullPlayer from "@/components/FullPlayer";
 import { hasDarkPseudoClass } from "nativewind/dist/utils/selector";
 import React, { useEffect, useState } from "react";
-import { Dimensions, View } from "react-native";
+import { Dimensions, Pressable, View } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import ImageColors, { ImageColorsResult } from "react-native-image-colors";
 import Animated, {
@@ -61,16 +61,15 @@ export default function Player() {
     ],
   }));
 
-  const tapGesture = Gesture.Tap().onEnd(() => {
+  const handleTap = () => {
     y.value = 80;
     o.value = 0;
-  });
+  };
 
   const maximiseHandler = Gesture.Pan()
     .onUpdate((e) => {
       y.value = e.absoluteY;
       o.value = e.absoluteY / height;
-      console.log(e.absoluteY / -height);
     })
     .onEnd((e) => {
       if (e.velocityY < -500) {
@@ -111,11 +110,11 @@ export default function Player() {
           className="w-full h-full -top-20 relative"
           style={{ backgroundColor: bgColor }}
         >
-          <GestureDetector gesture={tapGesture}>
+          <Pressable onPress={handleTap}>
             <Animated.View className="h-20 pb-4" style={[floatingOpacity]}>
               <FloatingPlayer track={track} />
             </Animated.View>
-          </GestureDetector>
+          </Pressable>
           <View className="h-full flex-1 items-center justify-center absolute">
             <FullPlayer track={track} />
           </View>
