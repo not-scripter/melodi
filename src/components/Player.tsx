@@ -34,11 +34,14 @@ export default function Player() {
   //   },
   // );
 
-  TrackPlayer.addEventListener(Event.PlaybackState, () => {
-    if (state === "closed") {
+  TrackPlayer.addEventListener(Event.PlaybackState, ({ state }) => {
+    if (state === "playing") {
       y.value = height;
       setstate("minimized");
+    } else if (state === "stopped") {
+      y.value = height + 80;
     }
+    console.log(state);
   });
 
   const [imageColors, setimageColors] = useState<ImageColorsResult>();
@@ -112,8 +115,7 @@ export default function Player() {
         (state === "minimized" && e.velocityY > 500) ||
         e.absoluteY > height - 80
       ) {
-        y.value = height + 80;
-        // TrackPlayer.reset();
+        TrackPlayer.reset();
         setstate("closed");
       } else if (e.velocityY > 500) {
         y.value = height;
