@@ -1,5 +1,5 @@
 import { useAppTheme } from "@/components/providers/Material3ThemeProvider";
-import { Link, useRouter } from "expo-router";
+import { Link, router, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
   FlatList,
@@ -23,6 +23,7 @@ import TrackPlayer, {
   useTrackPlayerEvents,
 } from "react-native-track-player";
 import AvatarText from "react-native-paper/lib/typescript/components/Avatar/AvatarText";
+import SideNav from "@/components/SideNav";
 
 export default function index() {
   const theme = useAppTheme();
@@ -53,6 +54,19 @@ export default function index() {
     await TrackPlayer.play();
   };
 
+  const navItems = [
+    {
+      label: "Home",
+      icon: "home",
+      href: "/index",
+    },
+    {
+      label: "Playlist",
+      icon: "list",
+      href: "/index",
+    },
+  ];
+
   return (
     <View
       className="relative h-full"
@@ -66,8 +80,15 @@ export default function index() {
           }}
           icon="close"
         />
+        <Appbar.Action
+          onPress={() => {
+            router.navigate("/test/align");
+          }}
+          icon="airplane"
+        />
       </Appbar.Header>
       <View className="flex-row">
+        <SideNav data={navItems} />
         <FlatList
           data={playlistData}
           renderItem={({ item }) => (

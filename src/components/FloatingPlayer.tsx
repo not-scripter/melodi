@@ -44,8 +44,8 @@ export default function FloatingPlayer({ track }: FloatingPlayerProps) {
             className="h-12 w-12 rounded-md"
           />
           <Text
-            className="text-lg font-bold ml-2"
-            style={{ color: theme.colors.primary }}
+            className="tracking-wide font-bold ml-2"
+            style={{ color: theme.colors.secondary }}
           >
             {track?.title}
           </Text>
@@ -54,19 +54,19 @@ export default function FloatingPlayer({ track }: FloatingPlayerProps) {
           <IconButton
             icon="play-skip-back"
             onPress={skipToPrevious}
-            iconColor={theme.colors.primary}
+            iconColor={theme.colors.secondary}
             className="m-0"
           />
           <IconButton
             icon={playbackState.state === State.Playing ? "pause" : "play"}
             onPress={() => togglePlayback(playbackState.state)}
-            iconColor={theme.colors.primary}
+            iconColor={theme.colors.secondary}
             className="m-0"
           />
           <IconButton
             icon="play-skip-forward"
             onPress={skipToNext}
-            iconColor={theme.colors.primary}
+            iconColor={theme.colors.secondary}
             className="m-0"
           />
         </View>

@@ -37,14 +37,14 @@ export default function PlayerControls() {
       <IconButton
         icon="heart"
         onPress={handleFavourite}
-        iconColor={theme.colors.primary}
+        iconColor={theme.colors.secondary}
         mode="contained"
         containerColor={theme.colors.backdrop}
       />
       <IconButton
         icon="play-skip-back"
         onPress={skipToPrevious}
-        iconColor={theme.colors.primary}
+        iconColor={theme.colors.secondary}
         mode="contained"
         containerColor={theme.colors.backdrop}
       />
@@ -52,21 +52,21 @@ export default function PlayerControls() {
         icon={playbackState.state === State.Playing ? "pause" : "play"}
         onPress={() => togglePlayback(playbackState.state)}
         size={48}
-        iconColor={theme.colors.primary}
+        iconColor={theme.colors.secondary}
         mode="contained"
         containerColor={theme.colors.backdrop}
       />
       <IconButton
         icon="play-skip-forward"
         onPress={skipToNext}
-        iconColor={theme.colors.primary}
+        iconColor={theme.colors.secondary}
         mode="contained"
         containerColor={theme.colors.backdrop}
       />
       <IconButton
         icon="infinite"
         onPress={handleLoop}
-        iconColor={theme.colors.primary}
+        iconColor={theme.colors.secondary}
         mode="contained"
         containerColor={theme.colors.backdrop}
       />

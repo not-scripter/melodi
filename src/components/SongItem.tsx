@@ -12,28 +12,28 @@ export default function SongItem({ track }: SongItemsProps) {
   const theme = useAppTheme();
 
   return (
-    <View className="flex-row items-center p-4">
+    <View className="flex-row items-center px-2 py-2">
       <Image
         source={{ uri: track?.artwork }}
-        className="h-12 w-12 rounded-md"
+        className="h-14 w-14 rounded-md"
       />
       <View className="ml-2 flex-1">
         <Text
-          className="text-lg font-bold"
-          style={{ color: theme.colors.primary }}
+          className="tracking-wide font-bold"
+          style={{ color: theme.colors.secondary }}
         >
           {track?.title}
         </Text>
-        <View className="flex-row justify-between">
+        <View className="flex-row justify-between mt-2">
           <Text
-            className="text-sm font-bold"
-            style={{ color: theme.colors.primary }}
+            className="text-xs font-bold"
+            style={{ color: theme.colors.outline }}
           >
             {track?.artist}
           </Text>
           <Text
-            className="text-sm font-bold"
-            style={{ color: theme.colors.primary }}
+            className="text-xs font-bold"
+            style={{ color: theme.colors.outline }}
           >
             {Math.floor(track?.duration / 60)
               .toString()

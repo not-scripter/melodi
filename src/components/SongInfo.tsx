@@ -14,8 +14,8 @@ export default function SongInfo({ track }: SongInfoProps) {
   return (
     <View>
       <Text
-        style={{ color: theme.colors.primary }}
-        className="font-bold text-xl text-center mb-6"
+        style={{ color: theme.colors.secondary }}
+        className="font-bold text-xl tracking-wide text-center mb-6"
       >
         {track?.title}
       </Text>
