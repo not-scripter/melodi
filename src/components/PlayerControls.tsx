@@ -29,14 +29,14 @@ export default function PlayerControls() {
   const skipToNext = async () => {
     await TrackPlayer.skipToNext();
   };
-  const setFavourite = async () => {};
-  const setShuffle = async () => {};
+  const handleFavourite = async () => {};
+  const handleLoop = async () => {};
 
   return (
     <View className="flex-row w-full items-center justify-evenly">
       <IconButton
         icon="heart"
-        onPress={setFavourite}
+        onPress={handleFavourite}
         iconColor={theme.colors.primary}
         mode="contained"
         containerColor={theme.colors.backdrop}
@@ -64,8 +64,8 @@ export default function PlayerControls() {
         containerColor={theme.colors.backdrop}
       />
       <IconButton
-        icon="shuffle"
-        onPress={setShuffle}
+        icon="infinite"
+        onPress={handleLoop}
         iconColor={theme.colors.primary}
         mode="contained"
         containerColor={theme.colors.backdrop}

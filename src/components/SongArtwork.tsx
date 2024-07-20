@@ -3,6 +3,13 @@ import { Image, Pressable, View } from "react-native";
 import { Text } from "react-native-paper";
 import { Track } from "react-native-track-player";
 import { useAppTheme } from "./providers/Material3ThemeProvider";
+import Animated, {
+  isSharedValue,
+  ReduceMotion,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from "react-native-reanimated";
 
 type SongArtwordProps = PropsWithChildren<{
   track: Track | null | undefined;
@@ -13,12 +20,29 @@ export default function SongArtwork({ track }: SongArtwordProps) {
 
   const [isInfoVisible, setisInfoVisible] = useState<boolean>(false);
 
+  const o = useSharedValue(0);
+  const animatedBgOpacity = useAnimatedStyle(() => ({
+    opacity: withSpring(o.value, {
+      reduceMotion: ReduceMotion.Never,
+    }),
+  }));
+
+  const handleBgOpacity = () => {
+    if (!isInfoVisible) {
+      o.value = 1;
+      setisInfoVisible(true);
+    } else {
+      o.value = 0;
+      setisInfoVisible(false);
+    }
+  };
+
   return (
     <View
       className="w-[85vw] h-[85vw] overflow-hidden relative"
       style={{ borderRadius: theme.roundness }}
     >
-      <Pressable onLongPress={() => setisInfoVisible(!isInfoVisible)}>
+      <Pressable onLongPress={handleBgOpacity}>
         <Image
           source={{
             uri:
@@ -27,36 +51,40 @@ export default function SongArtwork({ track }: SongArtwordProps) {
           }}
           className="w-full h-full"
         />
-        {isInfoVisible && (
-          <View className="absolute w-full h-full bg-black/50 flex-1 items-center justify-center">
-            <View>
-              <Text
-                style={{ color: theme.colors.onPrimary }}
-                className="text-lg font-bold"
-              >
-                Title: {track?.title}
-              </Text>
-              <Text
-                className="text-lg font-bold"
-                style={{ color: theme.colors.onPrimary }}
-              >
-                Artist: {track?.artist}
-              </Text>
-              <Text
-                className="text-lg font-bold"
-                style={{ color: theme.colors.onPrimary }}
-              >
-                Type: {track?.type}
-              </Text>
-              <Text
-                className="text-lg font-bold"
-                style={{ color: theme.colors.onPrimary }}
-              >
-                Genre: {track?.genre}
-              </Text>
-            </View>
+        <Animated.View
+          className="absolute w-full h-full flex-1 items-center justify-center"
+          style={[
+            animatedBgOpacity,
+            { backgroundColor: theme.colors.background + "CC" },
+          ]}
+        >
+          <View>
+            <Text
+              style={{ color: theme.colors.primary }}
+              className="text-lg font-bold"
+            >
+              Title: {track?.title}
+            </Text>
+            <Text
+              className="text-lg font-bold"
+              style={{ color: theme.colors.primary }}
+            >
+              Artist: {track?.artist}
+            </Text>
+            <Text
+              className="text-lg font-bold"
+              style={{ color: theme.colors.primary }}
+            >
+              Type: {track?.type}
+            </Text>
+            <Text
+              className="text-lg font-bold"
+              style={{ color: theme.colors.primary }}
+            >
+              Genre: {track?.genre}
+            </Text>
           </View>
-        )}
+        </Animated.View>
       </Pressable>
     </View>
   );
