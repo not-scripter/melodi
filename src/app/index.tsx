@@ -56,7 +56,7 @@ export default function index() {
   return (
     <View
       className="relative h-full"
-      style={{ backgroundColor: theme.colors.onBackground }}
+      style={{ backgroundColor: theme.colors.background }}
     >
       <Appbar.Header>
         <Appbar.Content title="Home" />

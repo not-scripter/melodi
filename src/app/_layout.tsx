@@ -4,17 +4,16 @@ import {
 } from "@/components/providers/Material3ThemeProvider";
 import Ionicons from "@expo/vector-icons/Ionicons";
 // import { Stack } from "expo-router";
+import { store } from "@/app/store";
 import { Stack } from "expo-router/stack";
 import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import ImageColors from "react-native-image-colors";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { ImageColorsResult } from "react-native-image-colors/lib/typescript/types";
 import TrackPlayer, { Track, useActiveTrack } from "react-native-track-player";
 import { Provider } from "react-redux";
 import { addTrack, playbackService, setupPlayer } from "rntp-service";
-import { store } from "@/app/store";
-import { ImageColorsResult } from "react-native-image-colors/lib/typescript/types";
 
 export default function Layout() {
   const theme = useAppTheme();
@@ -22,7 +21,7 @@ export default function Layout() {
   // const insets = useSafeAreaInsets();
   // console.log(insets);
 
-  const [isPlayerReady, setisPlayerReady] = useState(false);
+  const [isPlayerReady, setisPlayerReady] = useState<boolean>();
 
   const [imageColors, setimageColors] = useState<ImageColorsResult>();
   const bgColor = imageColors

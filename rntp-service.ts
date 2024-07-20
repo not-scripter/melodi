@@ -1,18 +1,21 @@
 import { playlistData } from "@/constants";
+import { setActiveTrack } from "@/features/track/trackSlice";
 import TrackPlayer, {
   Event,
   RepeatMode,
   Capability,
+  AppKilledPlaybackBehavior,
 } from "react-native-track-player";
+import { useDispatch } from "react-redux";
 
 export async function setupPlayer() {
   let isSetup = false;
   try {
-    await TrackPlayer.getActiveTrackIndex();
-    isSetup = true;
-  } catch (error) {
-    await TrackPlayer.setupPlayer();
+    const res = await TrackPlayer.setupPlayer();
     await TrackPlayer.updateOptions({
+      android: {
+        appKilledPlaybackBehavior: AppKilledPlaybackBehavior.ContinuePlayback,
+      },
       capabilities: [
         Capability.Play,
         Capability.Pause,
@@ -24,7 +27,13 @@ export async function setupPlayer() {
     });
     isSetup = true;
 
+    console.log(res);
     return isSetup;
+
+    // await TrackPlayer.getActiveTrackIndex();
+    // isSetup = true;
+  } catch (error) {
+    console.log(error);
   }
 }
 
@@ -46,7 +55,17 @@ export async function playbackService() {
   TrackPlayer.addEventListener(Event.RemoteNext, () => {
     TrackPlayer.skipToNext();
   });
-  TrackPlayer.addEventListener(Event.RemoteSeek, (to) => {
-    TrackPlayer.seekTo(to.position);
+  TrackPlayer.addEventListener(Event.RemoteSeek, ({ position }) => {
+    TrackPlayer.seekTo(position);
   });
+  TrackPlayer.addEventListener(
+    Event.PlaybackProgressUpdated,
+    ({ track, position }) => {
+      console.log(track.toString(), position.toString());
+      console.log("playback proggress upfated");
+      // dispatch(
+      //   setActiveTrack({ activeTrack: track, activeTrackPosition: position }),
+      // );
+    },
+  );
 }

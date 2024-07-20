@@ -15,15 +15,16 @@ export default function SongSlider() {
         value={position}
         minimumValue={0}
         maximumValue={duration}
-        thumbTintColor={theme.colors.onPrimary}
-        maximumTrackTintColor={theme.colors.onPrimary}
+        thumbTintColor={theme.colors.secondary}
+        maximumTrackTintColor={theme.colors.onSurface}
+        minimumTrackTintColor={theme.colors.primary}
         onValueChange={(value) => seekTo(value)}
       />
       <View className="flex-row w-full justify-between px-3">
-        <Text className=" font-bold" style={{ color: theme.colors.onPrimary }}>
+        <Text className=" font-bold" style={{ color: theme.colors.primary }}>
           {new Date(position * 1000).toISOString().substring(15, 19)}
         </Text>
-        <Text className=" font-bold" style={{ color: theme.colors.onPrimary }}>
+        <Text className=" font-bold" style={{ color: theme.colors.primary }}>
           {new Date((duration - position) * 1000)
             .toISOString()
             .substring(15, 19)}

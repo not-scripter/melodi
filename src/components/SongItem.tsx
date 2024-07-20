@@ -20,20 +20,20 @@ export default function SongItem({ track }: SongItemsProps) {
       <View className="ml-2 flex-1">
         <Text
           className="text-lg font-bold"
-          style={{ color: theme.colors.onPrimary }}
+          style={{ color: theme.colors.primary }}
         >
           {track?.title}
         </Text>
         <View className="flex-row justify-between">
           <Text
             className="text-sm font-bold"
-            style={{ color: theme.colors.surface }}
+            style={{ color: theme.colors.primary }}
           >
             {track?.artist}
           </Text>
           <Text
             className="text-sm font-bold"
-            style={{ color: theme.colors.surface }}
+            style={{ color: theme.colors.primary }}
           >
             {Math.floor(track?.duration / 60)
               .toString()

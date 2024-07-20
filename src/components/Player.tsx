@@ -1,5 +1,6 @@
 import FloatingPlayer from "@/components/FloatingPlayer";
 import FullPlayer from "@/components/FullPlayer";
+import { setActiveTrack } from "@/features/track/trackSlice";
 import React, { useEffect, useState } from "react";
 import { Dimensions, Pressable, View } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
@@ -12,9 +13,25 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Track, useActiveTrack } from "react-native-track-player";
+import TrackPlayer, {
+  Event,
+  Track,
+  useActiveTrack,
+} from "react-native-track-player";
+import { useDispatch } from "react-redux";
 
 export default function Player() {
+  // const dispatch = useDispatch();
+  // TrackPlayer.addEventListener(
+  //   Event.PlaybackProgressUpdated,
+  //   ({ track, position }) => {
+  //     console.log(track, position);
+  //     // dispatch(
+  //     //   setActiveTrack({ activeTrack: track, activeTrackPosition: position }),
+  //     // );
+  //   },
+  // );
+
   const [imageColors, setimageColors] = useState<ImageColorsResult>();
   const bgColor = imageColors
     ? imageColors.platform === "ios"
