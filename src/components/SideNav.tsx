@@ -2,33 +2,55 @@ import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import React, { PropsWithChildren } from "react";
 import { useAppTheme } from "./providers/Material3ThemeProvider";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { router, usePathname } from "expo-router";
+import { Appbar } from "react-native-paper";
 
-export type SideNavProps = {
+export interface SideNavProps {
   data: {
     icon: string;
     label: string;
     href: string;
   }[];
   props?: any;
-};
+  ListHeaderComponent?: any;
+}
 
 export default function SideNav({
   data,
-  props,
-}: PropsWithChildren<SideNavProps>) {
+  ListHeaderComponent,
+  ...props
+}: SideNavProps) {
   const theme = useAppTheme();
+  const pathname = usePathname();
+  console.log(pathname);
   return (
-    <View className="w-20 pb-20">
+    <View className="w-16 pb-20">
       <FlatList
         data={data}
+        ListHeaderComponent={ListHeaderComponent}
         renderItem={({ item, index }) => (
           <TouchableOpacity
             key={index}
             className="h-24 flex items-center justify-center -rotate-90"
+            onPress={() => router.navigate(item.href)}
           >
+            <View className="w-6 h-6">
+              {pathname === item.href && (
+                <Ionicons
+                  name={item.icon}
+                  size={24}
+                  color={theme.colors.secondary}
+                />
+              )}
+            </View>
             <Text
               className="font-bold tracking-wide"
-              style={{ color: theme.colors.secondary }}
+              style={{
+                color:
+                  pathname === item.href
+                    ? theme.colors.secondary
+                    : theme.colors.outline,
+              }}
             >
               {item.label}
             </Text>

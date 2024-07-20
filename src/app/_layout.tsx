@@ -14,6 +14,7 @@ import { ImageColorsResult } from "react-native-image-colors/lib/typescript/type
 import TrackPlayer, { Track, useActiveTrack } from "react-native-track-player";
 import { Provider } from "react-redux";
 import { addTrack, playbackService, setupPlayer } from "rntp-service";
+import Player from "@/components/Player";
 
 export default function Layout() {
   const theme = useAppTheme();
@@ -75,6 +76,8 @@ export default function Layout() {
         >
           <Stack
             screenOptions={{
+              gestureEnabled: true,
+              animation: "slide_from_bottom",
               headerStyle: {
                 backgroundColor: theme.colors.onBackground,
               },
@@ -86,8 +89,9 @@ export default function Layout() {
               headerShown: false,
             }}
           >
-            <Stack.Screen name="index" />
+            {/* <Stack.Screen name="index" /> */}
           </Stack>
+          <Player />
         </GestureHandlerRootView>
       </Material3ThemeProvider>
     </Provider>

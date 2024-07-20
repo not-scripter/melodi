@@ -58,12 +58,12 @@ export default function index() {
     {
       label: "Home",
       icon: "home",
-      href: "/index",
+      href: "/",
     },
     {
       label: "Playlist",
       icon: "list",
-      href: "/index",
+      href: "/playlist",
     },
   ];
 
@@ -100,7 +100,6 @@ export default function index() {
           keyExtractor={(track) => track.id}
         />
       </View>
-      <Player />
     </View>
   );
 }

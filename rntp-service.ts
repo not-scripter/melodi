@@ -1,16 +1,17 @@
 import { playlistData } from "@/constants";
-import { setActiveTrack } from "@/features/track/trackSlice";
 import TrackPlayer, {
+  AppKilledPlaybackBehavior,
+  Capability,
   Event,
   RepeatMode,
-  Capability,
-  AppKilledPlaybackBehavior,
 } from "react-native-track-player";
-import { useDispatch } from "react-redux";
 
 export async function setupPlayer() {
   let isSetup = false;
   try {
+    await TrackPlayer.getActiveTrackIndex();
+    isSetup = true;
+  } catch (error) {
     const res = await TrackPlayer.setupPlayer();
     await TrackPlayer.updateOptions({
       android: {
@@ -27,13 +28,7 @@ export async function setupPlayer() {
     });
     isSetup = true;
 
-    console.log(res);
     return isSetup;
-
-    // await TrackPlayer.getActiveTrackIndex();
-    // isSetup = true;
-  } catch (error) {
-    console.log(error);
   }
 }
 
@@ -67,5 +62,9 @@ export async function playbackService() {
       //   setActiveTrack({ activeTrack: track, activeTrackPosition: position }),
       // );
     },
+  );
+  TrackPlayer.addEventListener(
+    Event.PlaybackActiveTrackChanged,
+    ({ track }) => {},
   );
 }

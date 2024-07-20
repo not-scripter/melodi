@@ -11,6 +11,7 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withSpring,
+  withTiming,
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import TrackPlayer, {
@@ -32,6 +33,13 @@ export default function Player() {
   //     // );
   //   },
   // );
+
+  TrackPlayer.addEventListener(Event.PlaybackState, () => {
+    if (state === "closed") {
+      y.value = height;
+      setstate("minimized");
+    }
+  });
 
   const [imageColors, setimageColors] = useState<ImageColorsResult>();
   const bgColor = imageColors
@@ -87,9 +95,9 @@ export default function Player() {
   const maximiseHandler = Gesture.Pan()
     .onUpdate((e) => {
       if (state === "minimized") {
-        y.value = e.absoluteY;
+        y.value = e.absoluteY + 80;
         o.value = e.absoluteY / height;
-      } else {
+      } else if (state === "maximized") {
         y.value = e.translationY + 80;
         o.value = 0;
       }
@@ -97,15 +105,19 @@ export default function Player() {
     .onEnd((e) => {
       if (e.velocityY < -500) {
         y.value = 80;
-
         o.value = 0;
 
         setstate("maximized");
+      } else if (
+        (state === "minimized" && e.velocityY > 500) ||
+        e.absoluteY > height - 80
+      ) {
+        y.value = height + 80;
+        // TrackPlayer.reset();
+        setstate("closed");
       } else if (e.velocityY > 500) {
         y.value = height;
-
         o.value = 1;
-
         setstate("minimized");
       } else if (e.translationY < -height / 2) {
         y.value = 80;
