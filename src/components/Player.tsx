@@ -19,6 +19,7 @@ import TrackPlayer, {
   useActiveTrack,
 } from "react-native-track-player";
 import { useDispatch } from "react-redux";
+import SongSlider from "./SongSlider";
 
 export default function Player() {
   // const dispatch = useDispatch();

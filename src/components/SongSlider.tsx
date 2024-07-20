@@ -4,6 +4,8 @@ import { Text, View } from "react-native";
 import { useProgress } from "react-native-track-player";
 import { seekTo } from "react-native-track-player/lib/src/trackPlayer";
 import { useAppTheme } from "./providers/Material3ThemeProvider";
+import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import { createAnimatedComponent } from "react-native-reanimated/lib/typescript/createAnimatedComponent";
 
 export default function SongSlider() {
   const theme = useAppTheme();

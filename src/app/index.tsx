@@ -67,16 +67,18 @@ export default function index() {
           icon="close"
         />
       </Appbar.Header>
-      <FlatList
-        data={playlistData}
-        renderItem={({ item }) => (
-          <Pressable onPress={() => handlePlay(item)}>
-            <SongItem track={item} />
-          </Pressable>
-        )}
-        ItemSeparatorComponent={Divider}
-        keyExtractor={(track) => track.id}
-      />
+      <View className="flex-row">
+        <FlatList
+          data={playlistData}
+          renderItem={({ item }) => (
+            <Pressable onPress={() => handlePlay(item)}>
+              <SongItem track={item} />
+            </Pressable>
+          )}
+          ItemSeparatorComponent={Divider}
+          keyExtractor={(track) => track.id}
+        />
+      </View>
       <Player />
     </View>
   );
