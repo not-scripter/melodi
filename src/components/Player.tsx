@@ -41,9 +41,11 @@ export default function Player() {
   TrackPlayer.addEventListener(Event.PlaybackState, ({ state }) => {
     if (state === "playing" && localState === "closed") {
       y.value = height;
+      o.value = 1;
       setlocalState("minimized");
     } else if (state === "stopped") {
       y.value = height + 80;
+      o.value = 0;
     }
   });
   useEffect(() => {}, [localState]);
@@ -157,8 +159,16 @@ export default function Player() {
         y.value = height;
         setlocalState("minimized");
         o.value = 1;
+      } else if (e.absoluteY > height / 2) {
+        y.value = 80;
+        o.value = 0;
+        setlocalState("maximized");
+      } else if (e.absoluteY < height / 2) {
+        y.value = height;
+        o.value = 1;
+        setlocalState("minimized");
       }
-
+      //
       // else {
       //   y.value = height;
       //   o.value = 1;

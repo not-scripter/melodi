@@ -45,14 +45,16 @@ export default function FloatingPlayer({ track }: FloatingPlayerProps) {
     return (
       <>
         <Slider
-          thumbStyle={{ display: "none" }}
+          disabled
+          thumbStyle={{ opacity: 0 }}
           containerStyle={{
             flex: 1,
             justifyContent: "flex-start",
             position: "absolute",
             width: "100%",
+            height: 2,
           }}
-          disabled
+          trackStyle={{ height: 2 }}
           value={position}
           minimumValue={0}
           maximumValue={duration}
