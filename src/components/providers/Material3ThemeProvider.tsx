@@ -1,3 +1,4 @@
+import { RootState } from "@/app/store";
 import {
   Material3Scheme,
   Material3Theme,
@@ -13,6 +14,7 @@ import {
   ProviderProps,
   useTheme,
 } from "react-native-paper";
+import { useSelector } from "react-redux";
 
 type Material3ThemeProviderProps = {
   theme: Material3Theme;
@@ -25,14 +27,15 @@ const Material3ThemeProviderContext =
 
 export function Material3ThemeProvider({
   children,
-  sourceColor,
+  // sourceColor,
   fallbackSourceColor,
   ...otherProps
 }: ProviderProps & { sourceColor?: string; fallbackSourceColor?: string }) {
   const colorScheme = useColorScheme();
 
+  const { artworkColors } = useSelector((state: RootState) => state.track);
   const { theme, updateTheme, resetTheme } = useMaterial3Theme({
-    sourceColor,
+    sourceColor: artworkColors.dominant,
     fallbackSourceColor,
   });
 

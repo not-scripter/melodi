@@ -60,8 +60,8 @@ export default function FloatingPlayer({ track }: FloatingPlayerProps) {
           value={position}
           minimumValue={0}
           maximumValue={duration}
-          maximumTrackTintColor={artworkColors.average}
-          minimumTrackTintColor={artworkColors.lightMuted}
+          maximumTrackTintColor={artworkColors.darkMuted}
+          minimumTrackTintColor={artworkColors.darkVibrant}
           animateTransitions={true}
         />
         <View className="relative w-full h-full flex-row items-center justify-between px-4 py-2">

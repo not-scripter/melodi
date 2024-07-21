@@ -6,6 +6,8 @@ import TrackPlayer from "react-native-track-player";
 import { useAppTheme } from "@/components/providers/Material3ThemeProvider";
 import SideNav from "@/components/SideNav";
 import Stack from "expo-router/stack";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
 
 const navItems = [
   {
@@ -48,18 +50,3 @@ export const RootSideHeader = () => {
     </Appbar.Header>
   );
 };
-// <Appbar.Header mode="large">
-//   <Appbar.Content title="Home" />
-//   <Appbar.Action
-//     onPress={() => {
-//       TrackPlayer.reset();
-//     }}
-//     icon="close"
-//   />
-//   <Appbar.Action
-//     onPress={() => {
-//       router.navigate("/test/align");
-//     }}
-//     icon="airplane"
-//   />
-// </Appbar.Header>
