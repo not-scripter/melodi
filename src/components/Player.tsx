@@ -45,6 +45,7 @@ export default function Player() {
       y.value = height + 80;
     }
   });
+
   TrackPlayer.addEventListener(
     Event.PlaybackActiveTrackChanged,
     ({ track }) => {

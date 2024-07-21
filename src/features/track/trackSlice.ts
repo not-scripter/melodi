@@ -3,13 +3,13 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { Track } from "react-native-track-player";
 
 export interface TrackState {
-  activeTrack: Track | null;
-  activeTrackPosition: number | null;
+  activeTrack: Track | undefined;
+  activeTrackPosition: number | undefined;
 }
 
 const initialState: TrackState = {
-  activeTrack: null,
-  activeTrackPosition: null,
+  activeTrack: undefined,
+  activeTrackPosition: undefined,
 };
 
 export const trackSlice = createSlice({
