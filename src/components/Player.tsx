@@ -57,7 +57,9 @@ export default function Player() {
     },
   );
 
-  const { activeTrack } = useSelector((state: RootState) => state.activeTrack);
+  const { activeTrack, artworkColors } = useSelector(
+    (state: RootState) => state.track,
+  );
 
   async function setup() {
     let isSetup = await setupPlayer();
@@ -73,20 +75,20 @@ export default function Player() {
     setup();
   }, []);
 
-  const [imageColors, setimageColors] = useState<ImageColorsResult>();
-  const bgColor = imageColors
-    ? imageColors.platform === "ios"
-      ? imageColors.background
-      : imageColors.dominant
-    : "#000";
-
   const track: Track | undefined = useActiveTrack();
 
   const getImageColors = async () => {
     const response =
-      track?.artwork && (await ImageColors.getColors(track?.artwork));
+      track?.artwork &&
+      (await ImageColors.getColors(track?.artwork, {
+        fallback: "#ff0000",
+        cache: true,
+        key: track?.artwork,
+        quality: "highest",
+      }));
     if (response) {
-      setimageColors(response);
+      // setimageColors(response);
+      dispatch(setActiveTrack({ artworkColors: response }));
     }
   };
 
@@ -185,7 +187,7 @@ export default function Player() {
       <GestureDetector gesture={maximiseHandler}>
         <Animated.View
           className="w-full h-full -top-20 relative"
-          style={{ backgroundColor: bgColor }}
+          style={{ backgroundColor: artworkColors.background }}
         >
           <Pressable onPress={handleTap}>
             <Animated.View className="h-20 pb-4" style={[floatingOpacity]}>

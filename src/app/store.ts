@@ -13,7 +13,7 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, trackSlice);
 
 export const store = configureStore({
-  reducer: { activeTrack: persistedReducer },
+  reducer: { track: persistedReducer },
 });
 
 // export const store = configureStore({
