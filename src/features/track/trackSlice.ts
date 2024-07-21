@@ -12,8 +12,8 @@ const initialState: TrackState = {
   activeTrackPosition: null,
 };
 
-export const counterSlice = createSlice({
-  name: "counter",
+export const trackSlice = createSlice({
+  name: "track",
   initialState,
   reducers: {
     setActiveTrack: (state, actions: PayloadAction<TrackState>) => {
@@ -23,6 +23,6 @@ export const counterSlice = createSlice({
   },
 });
 
-export const { setActiveTrack } = counterSlice.actions;
+export const { setActiveTrack } = trackSlice.actions;
 
-export default counterSlice.reducer;
+export default trackSlice.reducer;

@@ -19,11 +19,14 @@ import TrackPlayer, {
   Track,
   useActiveTrack,
 } from "react-native-track-player";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import SongSlider from "./SongSlider";
+import { RootState } from "@/app/store";
+import { addTrack, setupPlayer } from "rntp-service";
 
 export default function Player() {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
+
   // TrackPlayer.addEventListener(
   //   Event.PlaybackProgressUpdated,
   //   ({ track, position }) => {
@@ -41,8 +44,29 @@ export default function Player() {
     } else if (state === "stopped") {
       y.value = height + 80;
     }
-    console.log(state);
   });
+  TrackPlayer.addEventListener(
+    Event.PlaybackActiveTrackChanged,
+    ({ track }) => {
+      dispatch(setActiveTrack({ activeTrack: track }));
+    },
+  );
+
+  const { activeTrack } = useSelector((state: RootState) => state.activeTrack);
+
+  async function setup() {
+    let isSetup = await setupPlayer();
+    if (isSetup && activeTrack) {
+      await TrackPlayer.add(activeTrack);
+    } else {
+      await addTrack();
+    }
+    // setisPlayerReady(isSetup);
+  }
+
+  useEffect(() => {
+    setup();
+  }, []);
 
   const [imageColors, setimageColors] = useState<ImageColorsResult>();
   const bgColor = imageColors

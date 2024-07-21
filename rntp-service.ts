@@ -12,7 +12,7 @@ export async function setupPlayer() {
     await TrackPlayer.getActiveTrackIndex();
     isSetup = true;
   } catch (error) {
-    const res = await TrackPlayer.setupPlayer();
+    await TrackPlayer.setupPlayer();
     await TrackPlayer.updateOptions({
       android: {
         appKilledPlaybackBehavior: AppKilledPlaybackBehavior.ContinuePlayback,

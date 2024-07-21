@@ -4,7 +4,7 @@ import {
 } from "@/components/providers/Material3ThemeProvider";
 import Ionicons from "@expo/vector-icons/Ionicons";
 // import { Stack } from "expo-router";
-import { store } from "@/app/store";
+import { RootState, store } from "@/app/store";
 import { Stack } from "expo-router/stack";
 import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
@@ -12,7 +12,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import ImageColors from "react-native-image-colors";
 import { ImageColorsResult } from "react-native-image-colors/lib/typescript/types";
 import TrackPlayer, { Track, useActiveTrack } from "react-native-track-player";
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 import { addTrack, playbackService, setupPlayer } from "rntp-service";
 import Player from "@/components/Player";
 
@@ -45,23 +45,11 @@ export default function Layout() {
     getImageColors();
   }, [track]);
 
-  async function setup() {
-    let isSetup = await setupPlayer();
-    if (isSetup) {
-      await addTrack();
-    }
-    setisPlayerReady(isSetup);
-  }
-
-  useEffect(() => {
-    setup();
-  }, []);
-
-  if (!isPlayerReady) {
-    <View>
-      <Text>Loading...</Text>
-    </View>;
-  }
+  // if (!isPlayerReady) {
+  //   <View>
+  //     <Text>Loading...</Text>
+  //   </View>;
+  // }
 
   return (
     <Provider store={store}>
