@@ -37,14 +37,16 @@ export default function Player() {
   //   },
   // );
 
+  const [localState, setlocalState] = useState("minimized");
   TrackPlayer.addEventListener(Event.PlaybackState, ({ state }) => {
-    if (state === "playing") {
+    if (state === "playing" && localState === "closed") {
       y.value = height;
-      setstate("minimized");
+      setlocalState("minimized");
     } else if (state === "stopped") {
       y.value = height + 80;
     }
   });
+  useEffect(() => {}, [localState]);
 
   TrackPlayer.addEventListener(
     Event.PlaybackActiveTrackChanged,
@@ -97,7 +99,6 @@ export default function Player() {
   const y = useSharedValue(height);
 
   const o = useSharedValue(1);
-  const [state, setstate] = useState("minimized");
   const floatingOpacity = useAnimatedStyle(() => ({
     opacity: withSpring(o.value, {
       reduceMotion: ReduceMotion.Never,
@@ -116,16 +117,18 @@ export default function Player() {
   }));
 
   const handleTap = () => {
-    y.value = 80;
-    o.value = 0;
+    if (localState === "minimized") {
+      y.value = 80;
+      o.value = 0;
+    }
   };
 
   const maximiseHandler = Gesture.Pan()
     .onUpdate((e) => {
-      if (state === "minimized") {
+      if (localState === "minimized") {
         y.value = e.absoluteY + 80;
         o.value = e.absoluteY / height;
-      } else if (state === "maximized") {
+      } else if (localState === "maximized") {
         y.value = e.translationY + 80;
         o.value = 0;
       }
@@ -135,30 +138,32 @@ export default function Player() {
         y.value = 80;
         o.value = 0;
 
-        setstate("maximized");
+        setlocalState("maximized");
       } else if (
-        (state === "minimized" && e.velocityY > 500) ||
+        (localState === "minimized" && e.velocityY > 500) ||
         e.absoluteY > height - 80
       ) {
         TrackPlayer.reset();
-        setstate("closed");
+        setlocalState("closed");
       } else if (e.velocityY > 500) {
         y.value = height;
         o.value = 1;
-        setstate("minimized");
+        setlocalState("minimized");
       } else if (e.translationY < -height / 2) {
         y.value = 80;
         o.value = 0;
-        setstate("maximized");
+        setlocalState("maximized");
       } else if (e.translationY > height / 2) {
         y.value = height;
-        setstate("minimized");
+        setlocalState("minimized");
         o.value = 1;
-      } else {
-        y.value = height;
-        o.value = 1;
-        setstate("minimized");
       }
+
+      // else {
+      //   y.value = height;
+      //   o.value = 1;
+      //   setlocalState("minimized");
+      // }
     })
     .runOnJS(true);
 

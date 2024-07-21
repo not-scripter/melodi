@@ -1,4 +1,3 @@
-import Slider from "@react-native-community/slider";
 import React from "react";
 import { Text, View } from "react-native";
 import { useProgress } from "react-native-track-player";
@@ -6,6 +5,7 @@ import { seekTo } from "react-native-track-player/lib/src/trackPlayer";
 import { useAppTheme } from "./providers/Material3ThemeProvider";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import { createAnimatedComponent } from "react-native-reanimated/lib/typescript/createAnimatedComponent";
+import { Slider } from "@miblanchard/react-native-slider";
 
 export default function SongSlider() {
   const theme = useAppTheme();
@@ -18,9 +18,10 @@ export default function SongSlider() {
         minimumValue={0}
         maximumValue={duration}
         thumbTintColor={theme.colors.secondary}
-        maximumTrackTintColor={theme.colors.onSurface}
+        maximumTrackTintColor={theme.colors.backdrop}
         minimumTrackTintColor={theme.colors.secondary}
-        onValueChange={(value) => seekTo(value)}
+        onSlidingComplete={(value) => seekTo(value[0])}
+        animateTransitions
       />
       <View className="flex-row w-full justify-between px-3">
         <Text className=" font-bold" style={{ color: theme.colors.secondary }}>
@@ -35,3 +36,11 @@ export default function SongSlider() {
     </View>
   );
 }
+
+export const ThumbPosition = ({ position }: any) => {
+  return (
+    <View className="bg-red-300">
+      <Text>{position}</Text>
+    </View>
+  );
+};

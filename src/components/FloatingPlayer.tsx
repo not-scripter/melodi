@@ -51,7 +51,6 @@ export default function FloatingPlayer({ track }: FloatingPlayerProps) {
             justifyContent: "flex-start",
             position: "absolute",
             width: "100%",
-            top: 0,
           }}
           disabled
           value={position}
