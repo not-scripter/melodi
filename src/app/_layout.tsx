@@ -4,7 +4,7 @@ import {
 } from "@/components/providers/Material3ThemeProvider";
 import Ionicons from "@expo/vector-icons/Ionicons";
 // import { Stack } from "expo-router";
-import { RootState, store } from "@/app/store";
+import { persistor, RootState, store } from "@/app/store";
 import { Stack } from "expo-router/stack";
 import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
@@ -15,6 +15,7 @@ import TrackPlayer, { Track, useActiveTrack } from "react-native-track-player";
 import { Provider, useSelector } from "react-redux";
 import { addTrack, playbackService, setupPlayer } from "rntp-service";
 import Player from "@/components/Player";
+import { PersistGate } from "redux-persist/integration/react";
 
 export default function Layout() {
   const theme = useAppTheme();
@@ -53,35 +54,37 @@ export default function Layout() {
 
   return (
     <Provider store={store}>
-      <Material3ThemeProvider
-        settings={{
-          icon: (props: any) => <Ionicons {...props} />,
-        }}
-      >
-        <GestureHandlerRootView
-          style={{ backgroundColor: theme.colors.onBackground }}
-          className="h-full"
+      <PersistGate loading={null} persistor={persistor}>
+        <Material3ThemeProvider
+          settings={{
+            icon: (props: any) => <Ionicons {...props} />,
+          }}
         >
-          <Stack
-            screenOptions={{
-              gestureEnabled: true,
-              animation: "slide_from_bottom",
-              headerStyle: {
-                backgroundColor: theme.colors.onBackground,
-              },
-              headerTintColor: theme.colors.onPrimary,
-              headerTitleStyle: {
-                fontWeight: "bold",
-              },
-              headerTitleAlign: "center",
-              headerShown: false,
-            }}
+          <GestureHandlerRootView
+            style={{ backgroundColor: theme.colors.onBackground }}
+            className="h-full"
           >
-            {/* <Stack.Screen name="index" /> */}
-          </Stack>
-          <Player />
-        </GestureHandlerRootView>
-      </Material3ThemeProvider>
+            <Stack
+              screenOptions={{
+                gestureEnabled: true,
+                animation: "slide_from_bottom",
+                headerStyle: {
+                  backgroundColor: theme.colors.onBackground,
+                },
+                headerTintColor: theme.colors.onPrimary,
+                headerTitleStyle: {
+                  fontWeight: "bold",
+                },
+                headerTitleAlign: "center",
+                headerShown: false,
+              }}
+            >
+              {/* <Stack.Screen name="index" /> */}
+            </Stack>
+            <Player />
+          </GestureHandlerRootView>
+        </Material3ThemeProvider>
+      </PersistGate>
     </Provider>
   );
 }
