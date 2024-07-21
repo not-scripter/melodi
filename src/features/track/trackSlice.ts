@@ -3,14 +3,6 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { ImageColorsResult } from "react-native-image-colors/lib/typescript/types";
 import { Track } from "react-native-track-player";
 
-export interface ImageColorsProps {
-  background: string;
-  primary: string;
-  secondary: string;
-  detail: string;
-  platform: "android" | "ios" | "web";
-}
-
 export interface TrackState {
   activeTrack: Track | undefined;
   activeTrackPosition: number | undefined;
@@ -33,14 +25,15 @@ export const trackSlice = createSlice({
 
       let colors = actions.payload.artworkColors;
       if (colors?.platform === "ios") {
-        state.artworkColors = colors;
-      } else if (colors?.platform === "android" || colors?.platform === "web") {
         state.artworkColors = {
-          background: colors.dominant,
-          primary: colors.vibrant,
-          secondary: colors.darkVibrant,
-          detail: colors.average,
+          dominant: colors.background,
+          vibrant: colors.primary,
+          average: colors.detail,
+          darkVibrant: colors.secondary,
+          lightMuted: colors.background,
         };
+      } else if (colors?.platform === "android" || colors?.platform === "web") {
+        state.artworkColors = colors;
       }
     },
   },

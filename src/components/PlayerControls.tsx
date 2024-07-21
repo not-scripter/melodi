@@ -6,9 +6,11 @@ import TrackPlayer, {
   usePlaybackState,
 } from "react-native-track-player";
 import { useAppTheme } from "./providers/Material3ThemeProvider";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/store";
 
 export default function PlayerControls() {
-  const theme = useAppTheme();
+  const { artworkColors } = useSelector((state: RootState) => state.track);
 
   const playbackState = usePlaybackState();
 
@@ -37,38 +39,38 @@ export default function PlayerControls() {
       <IconButton
         icon="heart"
         onPress={handleFavourite}
-        iconColor={theme.colors.secondary}
+        iconColor={artworkColors.lightMuted}
         mode="contained"
-        containerColor={theme.colors.backdrop}
+        containerColor={artworkColors.darkMuted}
       />
       <IconButton
         icon="play-skip-back"
         onPress={skipToPrevious}
-        iconColor={theme.colors.secondary}
+        iconColor={artworkColors.lightMuted}
         mode="contained"
-        containerColor={theme.colors.backdrop}
+        containerColor={artworkColors.darkMuted}
       />
       <IconButton
         icon={playbackState.state === State.Playing ? "pause" : "play"}
         onPress={() => togglePlayback(playbackState.state)}
         size={48}
-        iconColor={theme.colors.secondary}
+        iconColor={artworkColors.lightMuted}
         mode="contained"
-        containerColor={theme.colors.backdrop}
+        containerColor={artworkColors.darkMuted}
       />
       <IconButton
         icon="play-skip-forward"
         onPress={skipToNext}
-        iconColor={theme.colors.secondary}
+        iconColor={artworkColors.lightMuted}
         mode="contained"
-        containerColor={theme.colors.backdrop}
+        containerColor={artworkColors.darkMuted}
       />
       <IconButton
         icon="infinite"
         onPress={handleLoop}
-        iconColor={theme.colors.secondary}
+        iconColor={artworkColors.lightMuted}
         mode="contained"
-        containerColor={theme.colors.backdrop}
+        containerColor={artworkColors.darkMuted}
       />
     </View>
   );

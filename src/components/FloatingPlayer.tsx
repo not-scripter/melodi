@@ -10,13 +10,15 @@ import TrackPlayer, {
 import { useAppTheme } from "./providers/Material3ThemeProvider";
 import { lightBlue50 } from "react-native-paper/lib/typescript/styles/themes/v2/colors";
 import { Slider } from "@miblanchard/react-native-slider";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/store";
 
 type FloatingPlayerProps = {
   track: Track | undefined;
 };
 
 export default function FloatingPlayer({ track }: FloatingPlayerProps) {
-  const theme = useAppTheme();
+  const { artworkColors } = useSelector((state: RootState) => state.track);
 
   const playbackState = usePlaybackState();
 
@@ -58,8 +60,8 @@ export default function FloatingPlayer({ track }: FloatingPlayerProps) {
           value={position}
           minimumValue={0}
           maximumValue={duration}
-          maximumTrackTintColor={theme.colors.backdrop}
-          minimumTrackTintColor={theme.colors.secondary}
+          maximumTrackTintColor={artworkColors.average}
+          minimumTrackTintColor={artworkColors.lightMuted}
           animateTransitions={true}
         />
         <View className="relative w-full h-full flex-row items-center justify-between px-4 py-2">
@@ -70,7 +72,7 @@ export default function FloatingPlayer({ track }: FloatingPlayerProps) {
             />
             <Text
               className="tracking-wide font-bold ml-2"
-              style={{ color: theme.colors.secondary }}
+              style={{ color: artworkColors.lightMuted }}
             >
               {track?.title}
             </Text>
@@ -79,19 +81,19 @@ export default function FloatingPlayer({ track }: FloatingPlayerProps) {
             <IconButton
               icon="play-skip-back"
               onPress={skipToPrevious}
-              iconColor={theme.colors.secondary}
+              iconColor={artworkColors.lightMuted}
               className="m-0"
             />
             <IconButton
               icon={playbackState.state === State.Playing ? "pause" : "play"}
               onPress={() => togglePlayback(playbackState.state)}
-              iconColor={theme.colors.secondary}
+              iconColor={artworkColors.lightMuted}
               className="m-0"
             />
             <IconButton
               icon="play-skip-forward"
               onPress={skipToNext}
-              iconColor={theme.colors.secondary}
+              iconColor={artworkColors.lightMuted}
               className="m-0"
             />
           </View>

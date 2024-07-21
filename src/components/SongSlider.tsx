@@ -6,9 +6,11 @@ import { useAppTheme } from "./providers/Material3ThemeProvider";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import { createAnimatedComponent } from "react-native-reanimated/lib/typescript/createAnimatedComponent";
 import { Slider } from "@miblanchard/react-native-slider";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/store";
 
 export default function SongSlider() {
-  const theme = useAppTheme();
+  const { artworkColors } = useSelector((state: RootState) => state.track);
   const { position, duration } = useProgress();
 
   return (
@@ -17,17 +19,23 @@ export default function SongSlider() {
         value={position}
         minimumValue={0}
         maximumValue={duration}
-        thumbTintColor={theme.colors.secondary}
-        minimumTrackTintColor={theme.colors.secondary}
-        maximumTrackTintColor={theme.colors.onSurfaceDisabled}
+        thumbTintColor={artworkColors.lightMuted}
+        maximumTrackTintColor={artworkColors.average}
+        minimumTrackTintColor={artworkColors.lightMuted}
         onSlidingComplete={(value) => seekTo(value[0])}
         animateTransitions
       />
       <View className="flex-row w-full justify-between">
-        <Text className=" font-bold" style={{ color: theme.colors.secondary }}>
+        <Text
+          className=" font-bold"
+          style={{ color: artworkColors.lightMuted }}
+        >
           {new Date(position * 1000).toISOString().substring(15, 19)}
         </Text>
-        <Text className=" font-bold" style={{ color: theme.colors.secondary }}>
+        <Text
+          className=" font-bold"
+          style={{ color: artworkColors.lightMuted }}
+        >
           {new Date(duration * 1000).toISOString().substring(15, 19)}
         </Text>
       </View>

@@ -187,7 +187,7 @@ export default function Player() {
       <GestureDetector gesture={maximiseHandler}>
         <Animated.View
           className="w-full h-full -top-20 relative"
-          style={{ backgroundColor: artworkColors.background }}
+          style={{ backgroundColor: artworkColors.dominant }}
         >
           <Pressable onPress={handleTap}>
             <Animated.View className="h-20 pb-4" style={[floatingOpacity]}>
