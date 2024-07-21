@@ -22,7 +22,6 @@ export default function SideNav({
 }: SideNavProps) {
   const theme = useAppTheme();
   const pathname = usePathname();
-  console.log(pathname);
   return (
     <View className="w-16 pb-20">
       <FlatList
