@@ -14,7 +14,7 @@ export default function SongItem({ track }: SongItemsProps) {
   const { colors } = useAppTheme();
 
   return (
-    <View className="flex-row items-center px-2 py-2">
+    <View className="flex-row items-center px-4 py-2">
       <Image
         source={{ uri: track?.artwork }}
         className="h-14 w-14 rounded-md"
