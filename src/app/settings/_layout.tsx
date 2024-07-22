@@ -17,12 +17,7 @@ export default function SettingsLayout() {
         />
         <Appbar.Content title="Settings" />
       </Appbar.Header>
-      <View
-        className="relative h-full"
-        style={{ backgroundColor: colors.background }}
-      >
-        <Slot />
-      </View>
+      <Slot screenOptions={{}} />
     </>
   );
 }
