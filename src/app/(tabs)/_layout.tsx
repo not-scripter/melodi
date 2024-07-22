@@ -26,7 +26,7 @@ export default function TabLayout() {
         />
       </Appbar.Header>
       <Tab.Navigator
-        initialRouteName="quick-picks"
+        initialRouteName="quickPicks"
         screenOptions={{
           tabBarStyle: {
             backgroundColor: colors.background,

@@ -34,6 +34,7 @@ export default function RootLayout() {
                 animation: "ios",
                 headerShown: false,
               }}
+              initialRouteName="(tabs)"
             >
               <Stack.Screen name="(tabs)" />
             </Stack>

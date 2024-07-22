@@ -1,3 +1,4 @@
+import { useAppTheme } from "@/components/providers/Material3ThemeProvider";
 import React, { useState } from "react";
 import { ScrollView } from "react-native";
 import {
@@ -12,6 +13,7 @@ import {
 type ThemeProps = "system" | "dynamic" | "pureBlack";
 
 export default function Appearance() {
+  const { colors } = useAppTheme();
   const [theme, settheme] = useState<ThemeProps>();
   const [isThemeDialogVisible, setisThemeDialogVisible] = useState(false);
   const showThemeDialog = () => setisThemeDialogVisible(true);
@@ -22,7 +24,7 @@ export default function Appearance() {
     setisSystemFontEnabled((prev) => !prev);
 
   return (
-    <ScrollView>
+    <ScrollView style={{ backgroundColor: colors.background }}>
       <List.Section>
         <List.Subheader>Colors</List.Subheader>
         <List.Item title="Theme" onPress={showThemeDialog} />
