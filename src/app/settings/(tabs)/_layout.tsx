@@ -12,22 +12,22 @@ export default function TabLayout() {
   return (
     <Tab.Navigator tabBar={TabBar} initialRouteName="appearance">
       <Tab.Screen
-        name="appearance"
+        name="Appearance"
         component={Appearance}
         options={{ tabBarIcon: "home" }}
       />
       <Tab.Screen
-        name="cache"
+        name="Cache"
         component={Cache}
         options={{ tabBarIcon: "home" }}
       />
       <Tab.Screen
-        name="database"
+        name="Database"
         component={Database}
         options={{ tabBarIcon: "cloud" }}
       />
       <Tab.Screen
-        name="player"
+        name="Player"
         component={Player}
         options={{ tabBarIcon: "build" }}
       />
