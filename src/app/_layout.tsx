@@ -60,10 +60,7 @@ export default function Layout() {
             icon: (props: any) => <Ionicons {...props} />,
           }}
         >
-          <GestureHandlerRootView
-            style={{ backgroundColor: theme.colors.onBackground }}
-            className="h-full"
-          >
+          <GestureHandlerRootView className="h-full">
             <Stack
               screenOptions={{
                 gestureEnabled: true,

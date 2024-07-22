@@ -20,7 +20,7 @@ export default function SideNav({
   ListHeaderComponent,
   ...props
 }: SideNavProps) {
-  const theme = useAppTheme();
+  const { colors } = useAppTheme();
   const pathname = usePathname();
   return (
     <View className="w-16 pb-20">
@@ -35,20 +35,14 @@ export default function SideNav({
           >
             <View className="w-6 h-6">
               {pathname === item.href && (
-                <Ionicons
-                  name={item.icon}
-                  size={24}
-                  color={theme.colors.secondary}
-                />
+                <Ionicons name={item.icon} size={24} color={colors.secondary} />
               )}
             </View>
             <Text
               className="font-bold tracking-wide"
               style={{
                 color:
-                  pathname === item.href
-                    ? theme.colors.secondary
-                    : theme.colors.outline,
+                  pathname === item.href ? colors.secondary : colors.outline,
               }}
             >
               {item.label}

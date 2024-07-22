@@ -19,6 +19,7 @@ type FloatingPlayerProps = {
 
 export default function FloatingPlayer({ track }: FloatingPlayerProps) {
   const { artworkColors } = useSelector((state: RootState) => state.track);
+  const { colors } = useAppTheme();
 
   const playbackState = usePlaybackState();
 
@@ -60,8 +61,8 @@ export default function FloatingPlayer({ track }: FloatingPlayerProps) {
           value={position}
           minimumValue={0}
           maximumValue={duration}
-          maximumTrackTintColor={artworkColors.darkMuted}
-          minimumTrackTintColor={artworkColors.darkVibrant}
+          maximumTrackTintColor={colors.onSecondary}
+          minimumTrackTintColor={colors.secondary}
           animateTransitions={true}
         />
         <View className="relative w-full h-full flex-row items-center justify-between px-4 py-2">
@@ -72,7 +73,7 @@ export default function FloatingPlayer({ track }: FloatingPlayerProps) {
             />
             <Text
               className="tracking-wide font-bold ml-2"
-              style={{ color: artworkColors.lightMuted }}
+              style={{ color: colors.secondary }}
             >
               {track?.title}
             </Text>
@@ -81,19 +82,22 @@ export default function FloatingPlayer({ track }: FloatingPlayerProps) {
             <IconButton
               icon="play-skip-back"
               onPress={skipToPrevious}
-              iconColor={artworkColors.lightMuted}
+              iconColor={colors.secondary}
+              containerColor={colors.backdrop}
               className="m-0"
             />
             <IconButton
               icon={playbackState.state === State.Playing ? "pause" : "play"}
               onPress={() => togglePlayback(playbackState.state)}
-              iconColor={artworkColors.lightMuted}
+              iconColor={colors.secondary}
+              containerColor={colors.backdrop}
               className="m-0"
             />
             <IconButton
               icon="play-skip-forward"
               onPress={skipToNext}
-              iconColor={artworkColors.lightMuted}
+              iconColor={colors.secondary}
+              containerColor={colors.backdrop}
               className="m-0"
             />
           </View>

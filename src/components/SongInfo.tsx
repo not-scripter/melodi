@@ -11,12 +11,12 @@ type SongInfoProps = PropsWithChildren<{
 }>;
 
 export default function SongInfo({ track }: SongInfoProps) {
-  const { artworkColors } = useSelector((state: RootState) => state.track);
+  const { colors } = useAppTheme();
 
   return (
     <View>
       <Text
-        style={{ color: artworkColors.lightMuted }}
+        style={{ color: colors.secondary }}
         className="font-bold text-xl tracking-wide text-center mb-6"
       >
         {track?.title}

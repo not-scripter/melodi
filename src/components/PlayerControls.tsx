@@ -11,6 +11,7 @@ import { RootState } from "@/app/store";
 
 export default function PlayerControls() {
   const { artworkColors } = useSelector((state: RootState) => state.track);
+  const { colors } = useAppTheme();
 
   const playbackState = usePlaybackState();
 
@@ -39,38 +40,38 @@ export default function PlayerControls() {
       <IconButton
         icon="heart"
         onPress={handleFavourite}
-        iconColor={artworkColors.lightMuted}
+        iconColor={colors.secondary}
+        containerColor={colors.backdrop}
         mode="contained"
-        containerColor={artworkColors.darkMuted}
       />
       <IconButton
         icon="play-skip-back"
         onPress={skipToPrevious}
-        iconColor={artworkColors.lightMuted}
+        iconColor={colors.secondary}
+        containerColor={colors.backdrop}
         mode="contained"
-        containerColor={artworkColors.darkMuted}
       />
       <IconButton
         icon={playbackState.state === State.Playing ? "pause" : "play"}
         onPress={() => togglePlayback(playbackState.state)}
         size={48}
-        iconColor={artworkColors.lightMuted}
+        iconColor={colors.secondary}
+        containerColor={colors.backdrop}
         mode="contained"
-        containerColor={artworkColors.darkMuted}
       />
       <IconButton
         icon="play-skip-forward"
         onPress={skipToNext}
-        iconColor={artworkColors.lightMuted}
+        iconColor={colors.secondary}
+        containerColor={colors.backdrop}
         mode="contained"
-        containerColor={artworkColors.darkMuted}
       />
       <IconButton
         icon="infinite"
         onPress={handleLoop}
-        iconColor={artworkColors.lightMuted}
+        iconColor={colors.secondary}
+        containerColor={colors.backdrop}
         mode="contained"
-        containerColor={artworkColors.darkMuted}
       />
     </View>
   );

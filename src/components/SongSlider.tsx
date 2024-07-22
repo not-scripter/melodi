@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/app/store";
 
 export default function SongSlider() {
-  const { artworkColors } = useSelector((state: RootState) => state.track);
+  const { colors } = useAppTheme();
   const { position, duration } = useProgress();
 
   return (
@@ -19,23 +19,17 @@ export default function SongSlider() {
         value={position}
         minimumValue={0}
         maximumValue={duration}
-        thumbTintColor={artworkColors.lightMuted}
-        maximumTrackTintColor={artworkColors.average}
-        minimumTrackTintColor={artworkColors.lightMuted}
+        thumbTintColor={colors.secondary}
+        maximumTrackTintColor={colors.onSecondary}
+        minimumTrackTintColor={colors.secondary}
         onSlidingComplete={(value) => seekTo(value[0])}
         animateTransitions
       />
       <View className="flex-row w-full justify-between">
-        <Text
-          className=" font-bold"
-          style={{ color: artworkColors.lightMuted }}
-        >
+        <Text className=" font-bold" style={{ color: colors.secondary }}>
           {new Date(position * 1000).toISOString().substring(15, 19)}
         </Text>
-        <Text
-          className=" font-bold"
-          style={{ color: artworkColors.lightMuted }}
-        >
+        <Text className=" font-bold" style={{ color: colors.secondary }}>
           {new Date(duration * 1000).toISOString().substring(15, 19)}
         </Text>
       </View>

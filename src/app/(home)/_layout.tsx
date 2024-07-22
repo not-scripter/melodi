@@ -20,14 +20,19 @@ const navItems = [
     icon: "list",
     href: "/playlist",
   },
+  {
+    label: "Colors",
+    icon: "list",
+    href: "/test/colors",
+  },
 ];
 
 export default function _layout() {
-  const theme = useAppTheme();
+  const { colors } = useAppTheme();
   return (
     <View
       className="relative h-full"
-      style={{ backgroundColor: theme.colors.background }}
+      style={{ backgroundColor: colors.background }}
     >
       <View className="flex-row">
         <SideNav data={navItems} ListHeaderComponent={RootSideHeader} />

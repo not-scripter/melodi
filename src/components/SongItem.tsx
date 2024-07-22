@@ -11,7 +11,7 @@ type SongItemsProps = {
 };
 
 export default function SongItem({ track }: SongItemsProps) {
-  const { artworkColors } = useSelector((state: RootState) => state.track);
+  const { colors } = useAppTheme();
 
   return (
     <View className="flex-row items-center px-2 py-2">
@@ -22,20 +22,20 @@ export default function SongItem({ track }: SongItemsProps) {
       <View className="ml-2 flex-1">
         <Text
           className="tracking-wide font-bold"
-          style={{ color: artworkColors.lightMuted }}
+          style={{ color: colors.secondary }}
         >
           {track?.title}
         </Text>
         <View className="flex-row justify-between mt-2">
           <Text
             className="text-xs font-bold"
-            style={{ color: artworkColors.lightMuted }}
+            style={{ color: colors.secondary }}
           >
             {track?.artist}
           </Text>
           <Text
             className="text-xs font-bold"
-            style={{ color: artworkColors.lightMuted }}
+            style={{ color: colors.secondary }}
           >
             {Math.floor(track?.duration / 60)
               .toString()

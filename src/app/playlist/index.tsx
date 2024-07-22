@@ -3,8 +3,12 @@ import React from "react";
 import { playlistData } from "@/constants";
 import SongItem from "@/components/SongItem";
 import Stack from "expo-router/stack";
+import { useTheme } from "@/components/providers/ThemeProvider";
 
 export default function index() {
+  const { colors } = useTheme();
+  console.log("Mytheme colors", colors);
+
   return (
     <>
       <FlatList
