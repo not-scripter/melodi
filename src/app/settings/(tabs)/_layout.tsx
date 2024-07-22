@@ -24,12 +24,12 @@ export default function TabLayout() {
       <Tab.Screen
         name="database"
         component={Database}
-        options={{ tabBarIcon: "home" }}
+        options={{ tabBarIcon: "cloud" }}
       />
       <Tab.Screen
         name="player"
         component={Player}
-        options={{ tabBarIcon: "home" }}
+        options={{ tabBarIcon: "build" }}
       />
     </Tab.Navigator>
   );

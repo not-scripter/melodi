@@ -1,6 +1,6 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import React from "react";
-import QuickPicks from "./quickPicks";
+import Explore from "./explore";
 import Songs from "./songs";
 import { Appbar } from "react-native-paper";
 import { router } from "expo-router";
@@ -9,6 +9,7 @@ import Artists from "./artists";
 import Albums from "./albums";
 import { useAppTheme } from "@/components/providers/Material3ThemeProvider";
 import IonIcons from "@expo/vector-icons/Ionicons";
+import { TabBar } from "@/components/TabBar";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -27,6 +28,7 @@ export default function TabLayout() {
       </Appbar.Header>
       <Tab.Navigator
         initialRouteName="quickPicks"
+        tabBar={TabBar}
         screenOptions={{
           tabBarStyle: {
             backgroundColor: colors.background,
@@ -42,49 +44,29 @@ export default function TabLayout() {
         }}
       >
         <Tab.Screen
-          name="quick-picks"
-          component={QuickPicks}
-          options={{
-            tabBarIcon: ({ color }) => (
-              <IonIcons name="home" size={24} color={color} />
-            ),
-          }}
+          name="Explore"
+          component={Explore}
+          options={{ tabBarIcon: "home" }}
         />
         <Tab.Screen
-          name="songs"
+          name="Songs"
           component={Songs}
-          options={{
-            tabBarIcon: ({ color }) => (
-              <IonIcons size={24} color={color} name="musical-notes" />
-            ),
-          }}
+          options={{ tabBarIcon: "musical-notes" }}
         />
         <Tab.Screen
-          name="playlists"
+          name="Playlists"
           component={Playlists}
-          options={{
-            tabBarIcon: ({ color }) => (
-              <IonIcons size={24} color={color} name="library" />
-            ),
-          }}
+          options={{ tabBarIcon: "library" }}
         />
         <Tab.Screen
-          name="artists"
+          name="Artists"
           component={Artists}
-          options={{
-            tabBarIcon: ({ color }) => (
-              <IonIcons size={24} color={color} name="person" />
-            ),
-          }}
+          options={{ tabBarIcon: "person" }}
         />
         <Tab.Screen
-          name="albums"
+          name="Albums"
           component={Albums}
-          options={{
-            tabBarIcon: ({ color }) => (
-              <IonIcons size={24} color={color} name="albums" />
-            ),
-          }}
+          options={{ tabBarIcon: "albums" }}
         />
       </Tab.Navigator>
     </>

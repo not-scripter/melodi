@@ -10,7 +10,7 @@ import TrackPlayer, {
   useTrackPlayerEvents,
 } from "react-native-track-player";
 
-export default function QuickPicks() {
+export default function Explore() {
   const { colors } = useAppTheme();
 
   const getmusic = async () => {
