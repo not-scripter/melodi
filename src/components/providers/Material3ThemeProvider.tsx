@@ -45,10 +45,12 @@ export function Material3ThemeProvider({
 
   const { artworkColors } = useSelector((state: RootState) => state.track);
 
-  const { theme, updateTheme, resetTheme } = useMaterial3Theme({
-    sourceColor: artworkColors.average,
-    fallbackSourceColor: artworkColors.vibrant,
-  });
+  const { theme, updateTheme, resetTheme } = useMaterial3Theme(
+    artworkColors && {
+      sourceColor: artworkColors.average,
+      fallbackSourceColor: artworkColors.vibrant,
+    },
+  );
 
   const dispatch = useDispatch();
   const track: Track | undefined = useActiveTrack();
