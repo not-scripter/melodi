@@ -1,6 +1,6 @@
 import { useAppTheme } from "@/components/providers/Material3ThemeProvider";
+import ScrollView from "@/components/ScrollView";
 import React, { useState } from "react";
-import { ScrollView } from "react-native";
 import {
   Button,
   Dialog,
@@ -24,7 +24,7 @@ export default function Appearance() {
     setisSystemFontEnabled((prev) => !prev);
 
   return (
-    <ScrollView style={{ backgroundColor: colors.background }}>
+    <ScrollView>
       <List.Section>
         <List.Subheader>Colors</List.Subheader>
         <List.Item title="Theme" onPress={showThemeDialog} />

@@ -1,10 +1,11 @@
-import { View, Text } from "react-native";
+import ScrollView from "@/components/ScrollView";
 import React from "react";
+import { Surface, Text, TouchableRipple } from "react-native-paper";
 
 export default function Cache() {
   return (
-    <View>
+    <ScrollView>
       <Text>Cache</Text>
-    </View>
+    </ScrollView>
   );
 }
