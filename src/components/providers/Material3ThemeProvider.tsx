@@ -1,5 +1,5 @@
 import { RootState } from "@/app/store";
-import { setActiveTrack } from "@/features/track/trackSlice";
+import { setActiveTrack } from "@/features/slices/trackSlice";
 import {
   Material3Scheme,
   Material3Theme,

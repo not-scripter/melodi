@@ -8,6 +8,7 @@ import TrackPlayer from "react-native-track-player";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { playbackService } from "rntp-service";
+import * as Linking from "expo-linking";
 
 export default function RootLayout() {
   // const insets = useSafeAreaInsets();
@@ -34,7 +35,6 @@ export default function RootLayout() {
                 animation: "ios",
                 headerShown: false,
               }}
-              initialRouteName="(tabs)"
             >
               <Stack.Screen name="(tabs)" />
             </Stack>

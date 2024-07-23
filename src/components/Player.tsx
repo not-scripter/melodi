@@ -1,6 +1,6 @@
 import FloatingPlayer from "@/components/FloatingPlayer";
 import FullPlayer from "@/components/FullPlayer";
-import { setActiveTrack } from "@/features/track/trackSlice";
+import { setActiveTrack } from "@/features/slices/trackSlice";
 import React, { useEffect, useState } from "react";
 import { Dimensions, Pressable, View } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
