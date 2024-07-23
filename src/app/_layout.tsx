@@ -9,6 +9,7 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { playbackService } from "rntp-service";
 import * as Linking from "expo-linking";
+import { ActivityIndicator } from "react-native-paper";
 
 export default function RootLayout() {
   // const insets = useSafeAreaInsets();
@@ -22,7 +23,7 @@ export default function RootLayout() {
 
   return (
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
+      <PersistGate loading={<ActivityIndicator />} persistor={persistor}>
         <Material3ThemeProvider
           settings={{
             icon: (props: any) => <Ionicons {...props} />,
@@ -35,9 +36,8 @@ export default function RootLayout() {
                 animation: "ios",
                 headerShown: false,
               }}
-            >
-              <Stack.Screen name="(tabs)" />
-            </Stack>
+              initialRouteName="(tabs)"
+            />
             <Player />
           </GestureHandlerRootView>
         </Material3ThemeProvider>

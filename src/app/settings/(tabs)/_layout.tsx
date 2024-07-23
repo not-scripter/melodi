@@ -4,7 +4,7 @@ import React from "react";
 import Appearance from "./appearance";
 import Info from "./info";
 import Others from "./others";
-import Player from "./controls";
+import Controls from "./controls";
 import Storage from "./storage";
 
 const Tab = createMaterialTopTabNavigator();
@@ -19,7 +19,7 @@ export default function TabLayout() {
       />
       <Tab.Screen
         name="Player"
-        component={Player}
+        component={Controls}
         options={{ tabBarIcon: "play" }}
       />
       <Tab.Screen

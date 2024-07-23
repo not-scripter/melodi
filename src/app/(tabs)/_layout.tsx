@@ -1,6 +1,6 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import React from "react";
-import Explore from "./explore";
+import Explore from ".";
 import Songs from "./songs";
 import { Appbar } from "react-native-paper";
 import { router } from "expo-router";
@@ -14,7 +14,6 @@ import { TabBar } from "@/components/TabBar";
 const Tab = createMaterialTopTabNavigator();
 
 export default function TabLayout() {
-  const { colors } = useAppTheme();
   return (
     <>
       <Appbar.Header mode="small">
@@ -26,23 +25,7 @@ export default function TabLayout() {
           icon="settings"
         />
       </Appbar.Header>
-      <Tab.Navigator
-        initialRouteName="quickPicks"
-        tabBar={TabBar}
-        screenOptions={{
-          tabBarStyle: {
-            backgroundColor: colors.background,
-          },
-          tabBarItemStyle: { borderRadius: 50 },
-          tabBarLabelStyle: { fontSize: 8 },
-          tabBarIconStyle: {
-            flex: 1,
-            alignItems: "center",
-            justifyContent: "center",
-          },
-          tabBarActiveTintColor: colors.secondary,
-        }}
-      >
+      <Tab.Navigator tabBar={TabBar}>
         <Tab.Screen
           name="Explore"
           component={Explore}

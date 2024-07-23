@@ -5,12 +5,13 @@ import { List, Switch } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { setcontrols } from "@/features/slices/settingsSlice";
 
-export default function Controla() {
+export default function Controls() {
   const dispatch = useDispatch();
   const { controls } = useSelector((state: RootState) => state.settings);
 
   const [resumePlayback, setresumePlayback] = useState<boolean>(
-    controls.player.resumePlayback,
+    false,
+    // controls.player.resumePlayback,
   );
   const toggleResumePlayback = () => setresumePlayback((prev) => !prev);
 
