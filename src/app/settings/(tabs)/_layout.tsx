@@ -1,10 +1,11 @@
+import { TabBar } from "@/components/TabBar";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import React from "react";
 import Appearance from "./appearance";
-import Cache from "./cache";
-import Database from "./database";
+import Info from "./info";
+import Others from "./others";
 import Player from "./player";
-import { TabBar } from "@/components/TabBar";
+import Storage from "./storage";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -14,22 +15,27 @@ export default function TabLayout() {
       <Tab.Screen
         name="Appearance"
         component={Appearance}
-        options={{ tabBarIcon: "home" }}
-      />
-      <Tab.Screen
-        name="Cache"
-        component={Cache}
-        options={{ tabBarIcon: "home" }}
-      />
-      <Tab.Screen
-        name="Database"
-        component={Database}
-        options={{ tabBarIcon: "cloud" }}
+        options={{ tabBarIcon: "color-palette" }}
       />
       <Tab.Screen
         name="Player"
         component={Player}
-        options={{ tabBarIcon: "build" }}
+        options={{ tabBarIcon: "play" }}
+      />
+      <Tab.Screen
+        name="Storage"
+        component={Storage}
+        options={{ tabBarIcon: "server" }}
+      />
+      <Tab.Screen
+        name="Others"
+        component={Others}
+        options={{ tabBarIcon: "shapes" }}
+      />
+      <Tab.Screen
+        name="Info"
+        component={Info}
+        options={{ tabBarIcon: "information" }}
       />
     </Tab.Navigator>
   );

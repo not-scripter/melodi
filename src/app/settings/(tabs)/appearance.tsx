@@ -13,7 +13,6 @@ import {
 type ThemeProps = "system" | "dynamic" | "pureBlack";
 
 export default function Appearance() {
-  const { colors } = useAppTheme();
   const [theme, settheme] = useState<ThemeProps>();
   const [isThemeDialogVisible, setisThemeDialogVisible] = useState(false);
   const showThemeDialog = () => setisThemeDialogVisible(true);
@@ -26,19 +25,8 @@ export default function Appearance() {
   return (
     <ScrollView>
       <List.Section>
-        <List.Subheader>Colors</List.Subheader>
+        <List.Subheader>COLORS</List.Subheader>
         <List.Item title="Theme" onPress={showThemeDialog} />
-
-        <List.Subheader>Typography</List.Subheader>
-        <List.Item
-          title="Use System Font"
-          right={() => (
-            <Switch
-              value={isSystemFontEnabled}
-              onChange={toggleIsSystemFontEnabled}
-            />
-          )}
-        />
 
         <Portal>
           <Dialog visible={isThemeDialogVisible} onDismiss={hideThemeDialog}>
@@ -68,6 +56,19 @@ export default function Appearance() {
             </Dialog.Actions>
           </Dialog>
         </Portal>
+      </List.Section>
+
+      <List.Section>
+        <List.Subheader>TYPOGRAPHY</List.Subheader>
+        <List.Item
+          title="Use System Font"
+          right={() => (
+            <Switch
+              value={isSystemFontEnabled}
+              onChange={toggleIsSystemFontEnabled}
+            />
+          )}
+        />
       </List.Section>
     </ScrollView>
   );
