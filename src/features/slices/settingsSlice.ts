@@ -30,12 +30,17 @@ export type StorageProps = {
     maxSize: SongCacheProps;
   };
 };
+export type OthersProps = {
+  battery: {
+    optimizationDisabled: boolean;
+  };
+};
 
 export interface SettingsProps {
   appearance: AppearanceProps;
   controls: ControlsProps;
   storage: StorageProps;
-  others: {};
+  others: OthersProps;
   info: {};
 }
 
@@ -65,7 +70,11 @@ const initialState: SettingsProps = {
       maxSize: "512mb",
     },
   },
-  others: {},
+  others: {
+    battery: {
+      optimizationDisabled: false,
+    },
+  },
   info: {},
 };
 
@@ -104,41 +113,17 @@ export const settingsSlice = createSlice({
         },
       };
     },
-    //   settheme: (state, actions: payloadaction<themeprops>) => {
-    //     state.appearance.colors.theme = actions.payload;
-    //   },
-    //   setusesystemfont: (state, actions: payloadaction<boolean>) => {
-    //     state.appearance.typography.usesystemfont = actions.payload;
-    //   },
-    //   setresumeplayback: (state, actions: payloadaction<boolean>) => {
-    //     state.controls.player.resumeplayback = actions.payload;
-    //   },
-    //   setsearchhistoryenabled: (state, actions: payloadaction<boolean>) => {
-    //     state.storage.searchhistory.isenabled = actions.payload;
-    //   },
-    //   setsearchhistorydata: (state, actions: payloadaction<string[]>) => {
-    //     state.storage.searchhistory.data = actions.payload;
-    //   },
-    //   setmaximagecachesize: (state, actions: payloadaction<imagecacheprops>) => {
-    //     state.storage.imagecache.maxsize = actions.payload;
-    //   },
-    //   setmaxSongCacheSize: (state, actions: PayloadAction<SongCacheProps>) => {
-    //     state.storage.songCache.maxSize = actions.payload;
-    //   },
+    setothers: (state, { payload }: PayloadAction<OthersProps>) => {
+      state.others = {
+        battery: {
+          optimizationDisabled: payload.battery.optimizationDisabled,
+        },
+      };
+    },
   },
 });
 
-export const {
-  setappearance,
-  setcontrols,
-  setstorage,
-  // settheme,
-  // setuseSystemFont,
-  // setresumePlayback,
-  // setmaxSongCacheSize,
-  // setmaxImageCacheSize,
-  // setsearchHistoryData,
-  // setsearchHistoryEnabled,
-} = settingsSlice.actions;
+export const { setappearance, setcontrols, setstorage, setothers } =
+  settingsSlice.actions;
 
 export default settingsSlice.reducer;

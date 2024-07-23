@@ -1,23 +1,50 @@
-import { View, Text } from "react-native";
-import React, { useState } from "react";
+import { RootState } from "@/app/store";
 import ScrollView from "@/components/ScrollView";
+import React, { useEffect, useState } from "react";
 import { Button, Dialog, List, Portal, RadioButton } from "react-native-paper";
-
-type ImageCacheProps = "128mb" | "256mb";
-type SongCacheProps = "512mb" | "1gb";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setstorage,
+  ImageCacheProps,
+  SongCacheProps,
+} from "@/features/slices/settingsSlice";
 
 export default function Storage() {
-  const [imageCache, setimageCache] = useState<ImageCacheProps>();
+  const dispatch = useDispatch();
+  const { storage } = useSelector((state: RootState) => state.settings);
+
+  const [imageCache, setimageCache] = useState<ImageCacheProps>(
+    storage.imageCache.maxSize,
+  );
   const [isImageCacheDialogVisible, setisImageCacheDialogVisible] =
     useState(false);
   const showImageCacheDialog = () => setisImageCacheDialogVisible(true);
   const hideImageCacheDialog = () => setisImageCacheDialogVisible(false);
 
-  const [songCache, setsongCache] = useState<SongCacheProps>();
+  const [songCache, setsongCache] = useState<SongCacheProps>(
+    storage.songCache.maxSize,
+  );
   const [isSongCacheDialogVisible, setisSongCacheDialogVisible] =
     useState(false);
   const showSongCacheDialog = () => setisSongCacheDialogVisible(true);
   const hideSongCacheDialog = () => setisSongCacheDialogVisible(false);
+
+  useEffect(() => {
+    dispatch(
+      setstorage({
+        searchHistory: {
+          isEnabled: storage.searchHistory.isEnabled,
+          data: storage.searchHistory.data,
+        },
+        imageCache: {
+          maxSize: imageCache,
+        },
+        songCache: {
+          maxSize: songCache,
+        },
+      }),
+    );
+  }, [imageCache, songCache]);
 
   return (
     <ScrollView>

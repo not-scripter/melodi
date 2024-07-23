@@ -4,7 +4,7 @@ import React from "react";
 import Appearance from "./appearance";
 import Info from "./info";
 import Others from "./others";
-import Player from "./player";
+import Player from "./controls";
 import Storage from "./storage";
 
 const Tab = createMaterialTopTabNavigator();

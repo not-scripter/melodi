@@ -44,7 +44,11 @@ export default function Appearance() {
     <ScrollView>
       <List.Section>
         <List.Subheader>COLORS</List.Subheader>
-        <List.Item title="Theme" onPress={showThemeDialog} />
+        <List.Item
+          title="Theme"
+          description={theme.slice(0, 1).toUpperCase() + theme.slice(1)}
+          onPress={showThemeDialog}
+        />
 
         <Portal>
           <Dialog visible={isThemeDialogVisible} onDismiss={hideThemeDialog}>
