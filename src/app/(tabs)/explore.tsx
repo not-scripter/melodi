@@ -41,7 +41,8 @@ export default function Explore() {
 
   return (
     <FlatList
-      style={{ backgroundColor: colors.background, paddingBottom: 80 }}
+      contentContainerStyle={{ paddingBottom: 80 }}
+      style={{ backgroundColor: colors.background }}
       data={playlistData}
       renderItem={({ item }) => (
         <Pressable onPress={() => handlePlay(item)}>
