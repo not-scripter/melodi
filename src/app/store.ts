@@ -1,24 +1,39 @@
+import settingsSlice from "@/features/slices/settingsSlice";
 import trackSlice from "@/features/slices/trackSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { configureStore } from "@reduxjs/toolkit";
-import { persistReducer, persistStore } from "redux-persist";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import {
+  FLUSH,
+  PAUSE,
+  PERSIST,
+  persistReducer,
+  persistStore,
+  PURGE,
+  REGISTER,
+  REHYDRATE,
+} from "redux-persist";
 import hardSet from "redux-persist/es/stateReconciler/hardSet";
 
 const persistConfig = {
-  key: "toot",
+  key: "root",
   storage: AsyncStorage,
   stateReconciler: hardSet,
 };
 
-const persistedReducer = persistReducer(persistConfig, trackSlice);
-
-export const store = configureStore({
-  reducer: { track: persistedReducer },
+const rootReducer = combineReducers({
+  track: persistReducer(persistConfig, trackSlice),
+  settings: persistReducer(persistConfig, settingsSlice),
 });
 
-// export const store = configureStore({
-//   reducer: { activeTrack: persistedReducer },
-// });
+export const store = configureStore({
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
+});
 
 export const persistor = persistStore(store);
 

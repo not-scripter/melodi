@@ -1,6 +1,6 @@
 import { useAppTheme } from "@/components/providers/Material3ThemeProvider";
 import ScrollView from "@/components/ScrollView";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Dialog,
@@ -9,18 +9,27 @@ import {
   RadioButton,
   Switch,
 } from "react-native-paper";
-
-type ThemeProps = "system" | "dynamic" | "pureBlack";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/app/store";
+import { setuseSystemFont, ThemeProps } from "@/features/slices/settingsSlice";
 
 export default function Appearance() {
-  const [theme, settheme] = useState<ThemeProps>();
+  const dispatch = useDispatch();
+  const { appearance } = useSelector((state: RootState) => state.settings);
+
+  const [theme, settheme] = useState<ThemeProps>(appearance.colors.theme);
   const [isThemeDialogVisible, setisThemeDialogVisible] = useState(false);
   const showThemeDialog = () => setisThemeDialogVisible(true);
   const hideThemeDialog = () => setisThemeDialogVisible(false);
 
-  const [isSystemFontEnabled, setisSystemFontEnabled] = useState(false);
-  const toggleIsSystemFontEnabled = () =>
-    setisSystemFontEnabled((prev) => !prev);
+  const [isUsingSystemFont, setisUsingSystemFont] = useState(
+    appearance.typography.useSystemFont,
+  );
+  const toggleIsSystemFontEnabled = () => setisUsingSystemFont((prev) => !prev);
+
+  useEffect(() => {
+    dispatch(settheme(theme), setuseSystemFont(isUsingSystemFont));
+  }, [theme, isUsingSystemFont]);
 
   return (
     <ScrollView>
@@ -64,7 +73,7 @@ export default function Appearance() {
           title="Use System Font"
           right={() => (
             <Switch
-              value={isSystemFontEnabled}
+              value={isUsingSystemFont}
               onChange={toggleIsSystemFontEnabled}
             />
           )}
