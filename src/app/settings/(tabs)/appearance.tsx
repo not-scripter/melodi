@@ -11,7 +11,7 @@ import {
 } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
-import { setuseSystemFont, ThemeProps } from "@/features/slices/settingsSlice";
+import { setappearance, ThemeProps } from "@/features/slices/settingsSlice";
 
 export default function Appearance() {
   const dispatch = useDispatch();
@@ -22,13 +22,22 @@ export default function Appearance() {
   const showThemeDialog = () => setisThemeDialogVisible(true);
   const hideThemeDialog = () => setisThemeDialogVisible(false);
 
-  const [isUsingSystemFont, setisUsingSystemFont] = useState(
+  const [isUsingSystemFont, setisUsingSystemFont] = useState<boolean>(
     appearance.typography.useSystemFont,
   );
   const toggleIsSystemFontEnabled = () => setisUsingSystemFont((prev) => !prev);
 
   useEffect(() => {
-    dispatch(settheme(theme), setuseSystemFont(isUsingSystemFont));
+    dispatch(
+      setappearance({
+        colors: {
+          theme,
+        },
+        typography: {
+          useSystemFont: isUsingSystemFont,
+        },
+      }),
+    );
   }, [theme, isUsingSystemFont]);
 
   return (
