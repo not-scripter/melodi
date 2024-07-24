@@ -25,14 +25,11 @@ export const favSlice = createSlice({
   name: "favourites",
   initialState,
   reducers: {
-    addFavMusics: ({ musics }, { payload }: PayloadAction<FavMusicsProps>) => {
+    addFavMusics: ({ musics }, { payload }: PayloadAction<Track>) => {
       musics = [...musics, payload];
     },
-    removeFavMusics: (
-      { musics },
-      { payload }: PayloadAction<FavMusicsProps>,
-    ) => {
-      musics = [musics.filter((item) => item !== payload)];
+    removeFavMusics: ({ musics }, { payload }: PayloadAction<Track>) => {
+      musics = musics.filter((item) => item !== payload);
     },
   },
 });
