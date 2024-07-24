@@ -1,5 +1,6 @@
 import settingsSlice from "@/features/slices/settingsSlice";
 import trackSlice from "@/features/slices/trackSlice";
+import favSlice from "@/features/slices/favSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import {
@@ -23,6 +24,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   track: persistReducer(persistConfig, trackSlice),
   settings: persistReducer(persistConfig, settingsSlice),
+  favourites: persistReducer(persistConfig, favSlice),
 });
 
 export const store = configureStore({
