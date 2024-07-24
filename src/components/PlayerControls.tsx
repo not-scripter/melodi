@@ -31,14 +31,12 @@ export default function PlayerControls() {
         onPress={handleFavourite}
         iconColor={colors.secondary}
         containerColor={colors.backdrop}
-        mode="contained"
       />
       <IconButton
         icon="play-skip-back"
         onPress={skipToPrevious}
         iconColor={colors.secondary}
         containerColor={colors.backdrop}
-        mode="contained"
       />
       {bufferingDuringPlay === true ? (
         <ActivityIndicator size={48} style={{ padding: 14 }} />
@@ -49,7 +47,6 @@ export default function PlayerControls() {
           size={48}
           iconColor={colors.secondary}
           containerColor={colors.backdrop}
-          mode="contained"
         />
       )}
       <IconButton
@@ -57,14 +54,12 @@ export default function PlayerControls() {
         onPress={skipToNext}
         iconColor={colors.secondary}
         containerColor={colors.backdrop}
-        mode="contained"
       />
       <IconButton
         icon="infinite"
         onPress={handleLoop}
         iconColor={colors.secondary}
         containerColor={colors.backdrop}
-        mode="contained"
       />
     </View>
   );

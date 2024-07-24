@@ -1,37 +1,28 @@
+import { Slider } from "@miblanchard/react-native-slider";
 import React from "react";
 import { Dimensions, Image, Text, View } from "react-native";
-import { IconButton } from "react-native-paper";
+import { ActivityIndicator, IconButton } from "react-native-paper";
 import TrackPlayer, {
   State,
   Track,
-  usePlaybackState,
+  useIsPlaying,
   useProgress,
 } from "react-native-track-player";
 import { useAppTheme } from "./providers/Material3ThemeProvider";
-import { lightBlue50 } from "react-native-paper/lib/typescript/styles/themes/v2/colors";
-import { Slider } from "@miblanchard/react-native-slider";
-import { useSelector } from "react-redux";
-import { RootState } from "@/app/store";
 
 type FloatingPlayerProps = {
   track: Track | undefined;
 };
 
 export default function FloatingPlayer({ track }: FloatingPlayerProps) {
-  const { artworkColors } = useSelector((state: RootState) => state.track);
   const { colors } = useAppTheme();
 
-  const playbackState = usePlaybackState();
-
-  const togglePlayback = async (playbackState: State | undefined) => {
-    const currentTrack = await TrackPlayer.getActiveTrackIndex();
-
-    if (currentTrack !== null) {
-      if (playbackState === State.Paused || playbackState === State.Ready) {
-        await TrackPlayer.play();
-      } else {
-        await TrackPlayer.pause();
-      }
+  const { playing, bufferingDuringPlay } = useIsPlaying();
+  const togglePlayback = async () => {
+    if (!playing) {
+      await TrackPlayer.play();
+    } else {
+      await TrackPlayer.pause();
     }
   };
   const skipToPrevious = async () => {
@@ -83,21 +74,22 @@ export default function FloatingPlayer({ track }: FloatingPlayerProps) {
               icon="play-skip-back"
               onPress={skipToPrevious}
               iconColor={colors.secondary}
-              containerColor={colors.backdrop}
               className="m-0"
             />
-            <IconButton
-              icon={playbackState.state === State.Playing ? "pause" : "play"}
-              onPress={() => togglePlayback(playbackState.state)}
-              iconColor={colors.secondary}
-              containerColor={colors.backdrop}
-              className="m-0"
-            />
+            {bufferingDuringPlay === true ? (
+              <ActivityIndicator style={{ margin: 8 }} />
+            ) : (
+              <IconButton
+                icon={playing ? "pause" : "play"}
+                onPress={() => togglePlayback()}
+                iconColor={colors.secondary}
+                className="m-0"
+              />
+            )}
             <IconButton
               icon="play-skip-forward"
               onPress={skipToNext}
               iconColor={colors.secondary}
-              containerColor={colors.backdrop}
               className="m-0"
             />
           </View>
