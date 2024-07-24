@@ -1,29 +1,18 @@
 import React from "react";
 import { View } from "react-native";
-import { IconButton } from "react-native-paper";
-import TrackPlayer, {
-  State,
-  usePlaybackState,
-} from "react-native-track-player";
+import { ActivityIndicator, IconButton } from "react-native-paper";
+import TrackPlayer, { useIsPlaying } from "react-native-track-player";
 import { useAppTheme } from "./providers/Material3ThemeProvider";
-import { useSelector } from "react-redux";
-import { RootState } from "@/app/store";
 
 export default function PlayerControls() {
-  const { artworkColors } = useSelector((state: RootState) => state.track);
   const { colors } = useAppTheme();
 
-  const playbackState = usePlaybackState();
-
-  const togglePlayback = async (playbackState: State | undefined) => {
-    const activeTrack = await TrackPlayer.getActiveTrackIndex();
-
-    if (activeTrack !== null) {
-      if (playbackState === State.Paused || playbackState === State.Ready) {
-        await TrackPlayer.play();
-      } else {
-        await TrackPlayer.pause();
-      }
+  const { playing, bufferingDuringPlay } = useIsPlaying();
+  const togglePlayback = async () => {
+    if (!playing) {
+      await TrackPlayer.play();
+    } else {
+      await TrackPlayer.pause();
     }
   };
   const skipToPrevious = async () => {
@@ -51,14 +40,18 @@ export default function PlayerControls() {
         containerColor={colors.backdrop}
         mode="contained"
       />
-      <IconButton
-        icon={playbackState.state === State.Playing ? "pause" : "play"}
-        onPress={() => togglePlayback(playbackState.state)}
-        size={48}
-        iconColor={colors.secondary}
-        containerColor={colors.backdrop}
-        mode="contained"
-      />
+      {bufferingDuringPlay === true ? (
+        <ActivityIndicator size={48} style={{ padding: 14 }} />
+      ) : (
+        <IconButton
+          icon={playing ? "pause" : "play"}
+          onPress={() => togglePlayback()}
+          size={48}
+          iconColor={colors.secondary}
+          containerColor={colors.backdrop}
+          mode="contained"
+        />
+      )}
       <IconButton
         icon="play-skip-forward"
         onPress={skipToNext}

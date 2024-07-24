@@ -164,4 +164,24 @@ export const playlistData: Track[] = [
     url: require("../assets/audio/four.mp3"),
     duration: 181,
   },
+  {
+    id: 17,
+    title: "Online Test Worked",
+    artist: "Test",
+    album: "Test",
+    artwork:
+      "https://c.saavncdn.com/258/Team-Side-Feat-Rcb-English-2024-20240313152735-500x500.jpg",
+    url: "https://sampleswap.org/mp3/artist/46669/joevirus_Out-post-aiff-160.mp3",
+    duration: 181,
+  },
+  {
+    id: 8,
+    title: "Test",
+    artist: "Test",
+    album: "Champagne Talk",
+    artwork:
+      "https://c.saavncdn.com/734/Champagne-Talk-Hindi-2022-20221008011951-500x500.jpg",
+    url: "",
+    duration: 207,
+  },
 ];

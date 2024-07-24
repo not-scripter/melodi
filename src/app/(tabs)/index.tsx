@@ -33,6 +33,7 @@ export default function Explore() {
     },
   );
 
+  //TODO: Fix this
   const handlePlay = async (track: Track) => {
     await TrackPlayer.add(track, activestate);
     await TrackPlayer.skipToPrevious();

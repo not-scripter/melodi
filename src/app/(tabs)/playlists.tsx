@@ -1,18 +1,17 @@
 import React from "react";
-import { Text, View } from "react-native";
-import ytdl from "ytdl-native";
+import { View } from "react-native";
+import { Button } from "react-native-paper";
+import TrackPlayer from "react-native-track-player";
 
 export default function Playlists() {
-  async function test() {
-    const youtubeURL = "https://music.youtube.com/watch?v=i8VAQ8Cy5rs";
-    const audio = await ytdl(youtubeURL, { filter: "audioonly" });
-    console.log(audio[0]);
-  }
+  async function test() {}
   test();
 
   return (
     <View>
-      <Text>Playlists</Text>
+      <Button mode="elevated" onPress={() => TrackPlayer.play()}>
+        Play
+      </Button>
     </View>
   );
 }
