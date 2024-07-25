@@ -10,8 +10,17 @@ import { PersistGate } from "redux-persist/integration/react";
 import { playbackService } from "rntp-service";
 import * as Linking from "expo-linking";
 import { ActivityIndicator } from "react-native-paper";
+import { useNavigation, useRouter } from "expo-router";
 
 export default function RootLayout() {
+  const router = useRouter();
+
+  Linking.addEventListener("url", ({ url }) => {
+    if (url === "trackplayer://notification.click") {
+      router.push("settings");
+    }
+  });
+
   // const insets = useSafeAreaInsets();
   // console.log(insets);
 
