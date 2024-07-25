@@ -4,14 +4,14 @@ import React, { useEffect, useState } from "react";
 import { List, Switch } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { setcontrols } from "@/features/slices/settingsSlice";
+import * as Linking from "expo-linking";
 
 export default function Controls() {
   const dispatch = useDispatch();
   const { controls } = useSelector((state: RootState) => state.settings);
 
   const [resumePlayback, setresumePlayback] = useState<boolean>(
-    false,
-    // controls.player.resumePlayback,
+    controls.player.resumePlayback,
   );
   const toggleResumePlayback = () => setresumePlayback((prev) => !prev);
 
@@ -42,6 +42,7 @@ export default function Controls() {
         <List.Item
           title="Equalizer"
           description="Interact with the system equalizer"
+          onPress={() => Linking.openSettings()}
         />
       </List.Section>
     </ScrollView>

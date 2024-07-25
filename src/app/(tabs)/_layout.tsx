@@ -1,15 +1,13 @@
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import React from "react";
-import Explore from ".";
-import Songs from "./songs";
-import { Appbar } from "react-native-paper";
-import { router } from "expo-router";
-import Playlists from "./playlists";
-import Artists from "./artists";
-import Albums from "./albums";
-import { useAppTheme } from "@/components/providers/Material3ThemeProvider";
-import IonIcons from "@expo/vector-icons/Ionicons";
 import { TabBar } from "@/components/TabBar";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { router } from "expo-router";
+import React from "react";
+import { Appbar } from "react-native-paper";
+import Explore from ".";
+import Albums from "./albums";
+import Artists from "./artists";
+import Playlists from "./playlists";
+import Songs from "./songs";
 
 const Tab = createMaterialTopTabNavigator();
 

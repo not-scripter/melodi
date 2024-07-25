@@ -18,9 +18,9 @@ export default function TabLayout() {
         options={{ tabBarIcon: "color-palette" }}
       />
       <Tab.Screen
-        name="Player"
+        name="Controls"
         component={Controls}
-        options={{ tabBarIcon: "play" }}
+        options={{ tabBarIcon: "construct" }}
       />
       <Tab.Screen
         name="Storage"

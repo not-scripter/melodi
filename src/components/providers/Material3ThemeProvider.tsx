@@ -1,15 +1,12 @@
 import { RootState } from "@/app/store";
-import { setActiveTrack } from "@/features/slices/trackSlice";
 import {
   Material3Scheme,
   Material3Theme,
   useMaterial3Theme,
 } from "@pchmn/expo-material3-theme";
-import { useContextKey } from "expo-router/build/Route";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect } from "react";
 import { useColorScheme } from "react-native";
 import ImageColors from "react-native-image-colors";
-import { ImageColorsResult } from "react-native-image-colors/lib/typescript/types";
 import {
   MD3DarkTheme,
   MD3LightTheme,
@@ -18,12 +15,7 @@ import {
   ProviderProps,
   useTheme,
 } from "react-native-paper";
-import TrackPlayer, {
-  Event,
-  Track,
-  useActiveTrack,
-  useTrackPlayerEvents,
-} from "react-native-track-player";
+import { Track, useActiveTrack } from "react-native-track-player";
 import { useDispatch, useSelector } from "react-redux";
 
 type Material3ThemeProviderProps = {
@@ -52,7 +44,6 @@ export function Material3ThemeProvider({
     },
   );
 
-  const dispatch = useDispatch();
   const track: Track | undefined = useActiveTrack();
   const getImageColor = async () => {
     track?.artwork &&
@@ -68,21 +59,6 @@ export function Material3ThemeProvider({
   useEffect(() => {
     getImageColor();
   }, [track]);
-
-  // TrackPlayer.addEventListener(
-  //   Event.PlaybackActiveTrackChanged,
-  //   ({ track }) => {
-  //     ImageColors.getColors(track?.artwork!, {
-  //       fallback: "#ff0000",
-  //       cache: true,
-  //       key: track?.artwork,
-  //       quality: "highest",
-  //     }).then((res) => {
-  //       updateTheme(res.vibrant);
-  //     });
-  //     dispatch(setActiveTrack({ activeTrack: track }));
-  //   },
-  // );
 
   const paperTheme =
     colorScheme === "dark"

@@ -1,36 +1,29 @@
+import { RootState } from "@/app/store";
 import FloatingPlayer from "@/components/FloatingPlayer";
 import FullPlayer from "@/components/FullPlayer";
 import { setActiveTrack } from "@/features/slices/trackSlice";
 import React, { useEffect, useState } from "react";
 import { Dimensions, Pressable, View } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
-import ImageColors from "react-native-image-colors";
-import { ImageColorsResult } from "react-native-image-colors/lib/typescript/types";
 import Animated, {
   ReduceMotion,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
-  withTiming,
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import TrackPlayer, {
   Event,
   Track,
   useActiveTrack,
-  useTrackPlayerEvents,
 } from "react-native-track-player";
 import { useDispatch, useSelector } from "react-redux";
-import SongSlider from "./SongSlider";
-import { RootState } from "@/app/store";
 import { addTrack, setupPlayer } from "rntp-service";
 import { useAppTheme } from "./providers/Material3ThemeProvider";
-import { useMaterial3Theme } from "@pchmn/expo-material3-theme";
 
 export default function Player() {
   const dispatch = useDispatch();
   const { colors } = useAppTheme();
-  const { updateTheme } = useMaterial3Theme();
 
   // TrackPlayer.addEventListener(
   //   Event.PlaybackProgressUpdated,
@@ -78,42 +71,6 @@ export default function Player() {
   }, []);
 
   const track: Track | undefined = useActiveTrack();
-
-  // TrackPlayer.addEventListener(
-  //   Event.PlaybackActiveTrackChanged,
-  //   ({ track }) => {
-  //     ImageColors.getColors(track?.artwork!, {
-  //       fallback: "#ff0000",
-  //       cache: true,
-  //       key: track?.artwork,
-  //       quality: "highest",
-  //     }).then((res) => {
-  //       // updateTheme(res.vibrant);
-  //     });
-  //     dispatch(setActiveTrack({ activeTrack: track }));
-  //   },
-  // );
-
-  // const { theme, updateTheme } = useMaterial3Theme();
-  // const getImageColors = async () => {
-  //   const response =
-  //     track?.artwork &&
-  //     (await ImageColors.getColors(track?.artwork, {
-  //       fallback: "#ff0000",
-  //       cache: true,
-  //       key: track?.artwork,
-  //       quality: "highest",
-  //     }));
-  //   if (response) {
-  //     updateTheme(response.dominant);
-  //     // setimageColors(response);
-  //     // dispatch(setActiveTrack({ artworkColors: response }));
-  //   }
-  // };
-  //
-  // useEffect(() => {
-  //   getImageColors();
-  // }, [track]);
 
   const { height } = Dimensions.get("screen");
 

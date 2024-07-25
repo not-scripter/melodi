@@ -29,7 +29,7 @@ export default function RootLayout() {
             icon: (props: any) => <Ionicons {...props} />,
           }}
         >
-          <GestureHandlerRootView className="h-full">
+          <GestureHandlerRootView>
             <Stack
               screenOptions={{
                 gestureEnabled: true,

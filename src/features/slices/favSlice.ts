@@ -7,15 +7,15 @@ export type FavPlaylistsProps = object[];
 export type FavArtistsProps = object[];
 export type FavAlbumsProps = object[];
 
-export interface SettingsProps {
+export interface FavouritesProps {
   musics: FavMusicsProps;
   playlists: FavPlaylistsProps;
   artists: FavArtistsProps;
   albums: FavAlbumsProps;
 }
 
-const initialState: SettingsProps = {
-  musics: [],
+const initialState: FavouritesProps = {
+  musics: [{ url: "test" }],
   playlists: [],
   artists: [],
   albums: [],
@@ -25,15 +25,18 @@ export const favSlice = createSlice({
   name: "favourites",
   initialState,
   reducers: {
-    addFavMusics: ({ musics }, { payload }: PayloadAction<Track>) => {
-      musics = [...musics, payload];
+    addFavMusic: ({ musics }, { payload }: PayloadAction<Track>) => {
+      if (musics !== undefined) {
+        musics = [...musics, payload];
+      }
+      musics = [payload];
     },
-    removeFavMusics: ({ musics }, { payload }: PayloadAction<Track>) => {
+    removeFavMusic: ({ musics }, { payload }: PayloadAction<Track>) => {
       musics = musics.filter((item) => item !== payload);
     },
   },
 });
 
-export const { addFavMusics } = favSlice.actions;
+export const { addFavMusic, removeFavMusic } = favSlice.actions;
 
 export default favSlice.reducer;
