@@ -13,8 +13,12 @@ import { PersistGate } from "redux-persist/integration/react";
 import { playbackService } from "rntp-service";
 
 import * as NavigationBar from "expo-navigation-bar";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export default function RootLayout() {
+  NavigationBar.setPositionAsync("absolute");
+  NavigationBar.setBackgroundColorAsync("#00000000");
+
   const router = useRouter();
 
   Linking.addEventListener("url", ({ url }) => {
@@ -22,9 +26,6 @@ export default function RootLayout() {
       router.replace("settings");
     }
   });
-
-  const visibility = NavigationBar.getVisibilityAsync();
-  console.log(visibility);
 
   // const insets = useSafeAreaInsets();
   // console.log(insets);
