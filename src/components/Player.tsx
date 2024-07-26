@@ -24,8 +24,15 @@ import { useAppTheme } from "./providers/Material3ThemeProvider";
 type localStateProps = "minimized" | "maximized" | "closed";
 
 export default function Player() {
+  const { height } = Dimensions.get("screen");
+  const { bottom } = useSafeAreaInsets();
   const dispatch = useDispatch();
   const { colors } = useAppTheme();
+  const track: Track | undefined = useActiveTrack();
+
+  const { activeTrack } = useSelector((state: RootState) => state.track);
+
+  const [localState, setlocalState] = useState<localStateProps>("minimized");
 
   // TrackPlayer.addEventListener(
   //   Event.PlaybackProgressUpdated,
@@ -37,15 +44,13 @@ export default function Player() {
   //   },
   // );
 
-  const [localState, setlocalState] = useState<localStateProps>("minimized");
-
   TrackPlayer.addEventListener(Event.PlaybackState, ({ state }) => {
     if (state === "playing" && localState === "closed") {
-      y.value = height - insets.bottom;
+      y.value = height - bottom;
       o.value = 1;
       setlocalState("minimized");
     } else if (state === "stopped") {
-      y.value = height + 80 + insets.bottom;
+      y.value = height + 80 + bottom;
       o.value = 0;
     }
   });
@@ -56,8 +61,6 @@ export default function Player() {
       dispatch(setActiveTrack({ activeTrack: track }));
     },
   );
-
-  const { activeTrack } = useSelector((state: RootState) => state.track);
 
   async function setup() {
     let isSetup = await setupPlayer();
@@ -72,13 +75,7 @@ export default function Player() {
     setup();
   }, []);
 
-  const track: Track | undefined = useActiveTrack();
-
-  const { height } = Dimensions.get("screen");
-
-  const insets = useSafeAreaInsets();
-
-  const y = useSharedValue(height - insets.bottom);
+  const y = useSharedValue(height - bottom);
 
   const o = useSharedValue(1);
   const floatingOpacity = useAnimatedStyle(() => ({
@@ -107,14 +104,13 @@ export default function Player() {
 
   const handleTap = () => {
     if (localState === "minimized") {
-      y.value = 80;
-      o.value = 0;
+      setlocalState("maximized");
     }
   };
 
   useEffect(() => {
     if (localState === "minimized") {
-      y.value = height - insets.bottom;
+      y.value = height - bottom;
       o.value = 1;
       fo.value = 0;
     } else if (localState === "maximized") {
@@ -128,15 +124,14 @@ export default function Player() {
 
   const maximiseHandler = Gesture.Pan()
     .onUpdate((e) => {
-      console.log(e.absoluteY / height);
       if (localState === "minimized") {
         y.value = e.absoluteY + 80;
         o.value = e.absoluteY / height;
         fo.value = e.translationY / -height;
       } else if (localState === "maximized") {
         y.value = e.translationY + 80;
-        o.value = 0;
-        fo.value = e.absoluteY / height;
+        o.value = e.translationY / height;
+        fo.value = e.y / height;
       }
     })
     .onEnd((e) => {

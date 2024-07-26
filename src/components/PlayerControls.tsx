@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import { ActivityIndicator, IconButton } from "react-native-paper";
 import TrackPlayer, {
+  Event,
   RepeatMode,
   Track,
   useActiveTrack,
@@ -10,20 +11,28 @@ import TrackPlayer, {
 import { useAppTheme } from "./providers/Material3ThemeProvider";
 import { RootState } from "@/app/store";
 import { useDispatch, useSelector } from "react-redux";
-import { addFavMusic, addFavMusics } from "@/features/slices/favSlice";
+import { addFavMusic, removeFavMusic } from "@/features/slices/favSlice";
 
 export default function PlayerControls() {
   const dispatch = useDispatch();
   const { colors } = useAppTheme();
-  const { musics } = useSelector((state: RootState) => state.favourites);
-  // const { activeTrack } = useSelector((state: RootState) => state.track);
   const track = useActiveTrack();
-
-  const [isFab, setisFab] = useState<boolean>();
-  // musics.find((item) => item === track) !== undefined,
-  const [isLooped, setisLooped] = useState(false);
-
   const { playing, bufferingDuringPlay } = useIsPlaying();
+
+  const { musics } = useSelector((state: RootState) => state.favourites);
+
+  const [isFab, setisFab] = useState<boolean>(musics.includes(track));
+  const [isLooped, setisLooped] = useState(false);
+  //
+  TrackPlayer.addEventListener(
+    Event.PlaybackActiveTrackChanged,
+    ({ track }) => {
+      setisFab(musics.includes(track));
+      setisLooped(false);
+      console.log(musics);
+    },
+  );
+
   const togglePlayback = async () => {
     if (!playing) {
       await TrackPlayer.play();
@@ -38,17 +47,19 @@ export default function PlayerControls() {
     await TrackPlayer.skipToNext();
   };
   const handleFav = async () => {
-    console.log(musics);
     setisFab((prev) => !prev);
+    if (musics.includes(track)) {
+      dispatch(removeFavMusic(track));
+    } else {
+      dispatch(addFavMusic(track));
+    }
   };
   const handleLoop = async () => {
     setisLooped((prev) => !prev);
     // TrackPlayer.setRepeatMode("Off");
   };
 
-  useEffect(() => {
-    dispatch(addFavMusic(track));
-  }, [isFab]);
+  // useEffect(() => {}, [isFab]);
 
   return (
     <View className="flex-row w-full items-center justify-evenly">

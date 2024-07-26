@@ -15,16 +15,28 @@ import {
 } from "redux-persist";
 import hardSet from "redux-persist/es/stateReconciler/hardSet";
 
-const persistConfig = {
-  key: "root",
+const settingsConfig = {
+  key: "track",
+  storage: AsyncStorage,
+  stateReconciler: hardSet,
+};
+
+const trackConfig = {
+  key: "track",
+  storage: AsyncStorage,
+  stateReconciler: hardSet,
+};
+
+const favConfig = {
+  key: "favourites",
   storage: AsyncStorage,
   stateReconciler: hardSet,
 };
 
 const rootReducer = combineReducers({
-  track: persistReducer(persistConfig, trackSlice),
-  settings: persistReducer(persistConfig, settingsSlice),
-  favourites: persistReducer(persistConfig, favSlice),
+  settings: persistReducer(settingsConfig, settingsSlice),
+  track: persistReducer(trackConfig, trackSlice),
+  favourites: persistReducer(favConfig, favSlice),
 });
 
 export const store = configureStore({

@@ -36,12 +36,19 @@ export function Material3ThemeProvider({
   const colorScheme = useColorScheme();
 
   const { artworkColors } = useSelector((state: RootState) => state.track);
+  const { appearance } = useSelector((state: RootState) => state.settings);
 
   const { theme, updateTheme, resetTheme } = useMaterial3Theme(
-    artworkColors && {
-      sourceColor: artworkColors.average,
-      fallbackSourceColor: artworkColors.vibrant,
-    },
+    appearance.colors.theme === "dynamic" && artworkColors
+      ? {
+          sourceColor: artworkColors.average,
+          fallbackSourceColor: artworkColors.vibrant,
+        }
+      : appearance.colors.theme === "pureBlack"
+        ? {
+            sourceColor: "#000000",
+          }
+        : {},
   );
 
   const track: Track | undefined = useActiveTrack();

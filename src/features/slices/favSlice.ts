@@ -15,7 +15,7 @@ export interface FavouritesProps {
 }
 
 const initialState: FavouritesProps = {
-  musics: [{ url: "test" }],
+  musics: [],
   playlists: [],
   artists: [],
   albums: [],
@@ -26,10 +26,7 @@ export const favSlice = createSlice({
   initialState,
   reducers: {
     addFavMusic: ({ musics }, { payload }: PayloadAction<Track>) => {
-      if (musics !== undefined) {
-        musics = [...musics, payload];
-      }
-      musics = [payload];
+      musics = [...musics, payload];
     },
     removeFavMusic: ({ musics }, { payload }: PayloadAction<Track>) => {
       musics = musics.filter((item) => item !== payload);
