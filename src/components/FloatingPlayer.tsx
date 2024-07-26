@@ -19,6 +19,7 @@ export default function FloatingPlayer({ track }: FloatingPlayerProps) {
 
   const { playing, bufferingDuringPlay } = useIsPlaying();
   const togglePlayback = async () => {
+    console.log("play pressed");
     if (!playing) {
       await TrackPlayer.play();
     } else {
@@ -81,7 +82,7 @@ export default function FloatingPlayer({ track }: FloatingPlayerProps) {
             ) : (
               <IconButton
                 icon={playing ? "pause" : "play"}
-                onPress={() => togglePlayback()}
+                onPress={togglePlayback}
                 iconColor={colors.secondary}
                 className="m-0"
               />

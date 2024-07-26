@@ -21,6 +21,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { addTrack, setupPlayer } from "rntp-service";
 import { useAppTheme } from "./providers/Material3ThemeProvider";
 
+type localStateProps = "minimized" | "maximized" | "closed";
+
 export default function Player() {
   const dispatch = useDispatch();
   const { colors } = useAppTheme();
@@ -35,14 +37,15 @@ export default function Player() {
   //   },
   // );
 
-  const [localState, setlocalState] = useState("minimized");
+  const [localState, setlocalState] = useState<localStateProps>("minimized");
+
   TrackPlayer.addEventListener(Event.PlaybackState, ({ state }) => {
     if (state === "playing" && localState === "closed") {
-      y.value = height;
+      y.value = height - insets.bottom;
       o.value = 1;
       setlocalState("minimized");
     } else if (state === "stopped") {
-      y.value = height + 80;
+      y.value = height + 80 + insets.bottom;
       o.value = 0;
     }
   });
@@ -63,7 +66,6 @@ export default function Player() {
     } else {
       await addTrack();
     }
-    // setisPlayerReady(isSetup);
   }
 
   useEffect(() => {
@@ -74,13 +76,20 @@ export default function Player() {
 
   const { height } = Dimensions.get("screen");
 
-  const { bottom } = useSafeAreaInsets();
+  const insets = useSafeAreaInsets();
 
-  const y = useSharedValue(height);
+  const y = useSharedValue(height - insets.bottom);
 
   const o = useSharedValue(1);
   const floatingOpacity = useAnimatedStyle(() => ({
     opacity: withSpring(o.value, {
+      reduceMotion: ReduceMotion.Never,
+    }),
+  }));
+
+  const fo = useSharedValue(1);
+  const fullOpacity = useAnimatedStyle(() => ({
+    opacity: withSpring(fo.value, {
       reduceMotion: ReduceMotion.Never,
     }),
   }));
@@ -103,55 +112,52 @@ export default function Player() {
     }
   };
 
+  useEffect(() => {
+    if (localState === "minimized") {
+      y.value = height - insets.bottom;
+      o.value = 1;
+      fo.value = 0;
+    } else if (localState === "maximized") {
+      y.value = 80;
+      o.value = 0;
+      fo.value = 1;
+    } else if (localState === "closed") {
+      TrackPlayer.reset();
+    }
+  }, [localState]);
+
   const maximiseHandler = Gesture.Pan()
     .onUpdate((e) => {
+      console.log(e.absoluteY / height);
       if (localState === "minimized") {
         y.value = e.absoluteY + 80;
         o.value = e.absoluteY / height;
+        fo.value = e.translationY / -height;
       } else if (localState === "maximized") {
         y.value = e.translationY + 80;
         o.value = 0;
+        fo.value = e.absoluteY / height;
       }
     })
     .onEnd((e) => {
       if (e.velocityY < -500) {
-        y.value = 80;
-        o.value = 0;
-
         setlocalState("maximized");
       } else if (
         (localState === "minimized" && e.velocityY > 500) ||
         e.absoluteY > height - 80
       ) {
-        TrackPlayer.reset();
         setlocalState("closed");
       } else if (e.velocityY > 500) {
-        y.value = height;
-        o.value = 1;
         setlocalState("minimized");
       } else if (e.translationY < -height / 2) {
-        y.value = 80;
-        o.value = 0;
         setlocalState("maximized");
       } else if (e.translationY > height / 2) {
-        y.value = height;
         setlocalState("minimized");
-        o.value = 1;
       } else if (e.absoluteY > height / 2) {
-        y.value = 80;
-        o.value = 0;
         setlocalState("maximized");
       } else if (e.absoluteY < height / 2) {
-        y.value = height;
-        o.value = 1;
         setlocalState("minimized");
       }
-      //
-      // else {
-      //   y.value = height;
-      //   o.value = 1;
-      //   setlocalState("minimized");
-      // }
     })
     .runOnJS(true);
 
@@ -166,13 +172,16 @@ export default function Player() {
           style={{ backgroundColor: colors.background }}
         >
           <Pressable onPress={handleTap}>
-            <Animated.View className="h-20 pb-4" style={[floatingOpacity]}>
+            <Animated.View className="h-20" style={[floatingOpacity]}>
               <FloatingPlayer track={track} />
             </Animated.View>
           </Pressable>
-          <View className="h-full flex-1 items-center justify-center absolute">
+          <Animated.View
+            style={[fullOpacity]}
+            className="h-full flex-1 items-center justify-center absolute"
+          >
             <FullPlayer track={track} />
-          </View>
+          </Animated.View>
         </Animated.View>
       </GestureDetector>
     </Animated.View>
