@@ -5,13 +5,14 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import * as Linking from "expo-linking";
 import { useRouter } from "expo-router";
 import { Stack } from "expo-router/stack";
-import { Platform } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { ActivityIndicator } from "react-native-paper";
 import TrackPlayer from "react-native-track-player";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { playbackService } from "rntp-service";
+
+import * as NavigationBar from "expo-navigation-bar";
 
 export default function RootLayout() {
   const router = useRouter();
@@ -21,6 +22,9 @@ export default function RootLayout() {
       router.replace("settings");
     }
   });
+
+  const visibility = NavigationBar.getVisibilityAsync();
+  console.log(visibility);
 
   // const insets = useSafeAreaInsets();
   // console.log(insets);
