@@ -130,12 +130,18 @@ export default function Player() {
     .onUpdate((e) => {
       if (localState === "minimized") {
         y.value = e.absoluteY + floatHeight;
-        o.value = e.absoluteY / height;
-        fo.value = e.translationY / -height;
+        // o.value = e.absoluteY / height;
+        // fo.value = e.translationY / -height;
+        (o.value = 0), (fo.value = 1);
       } else if (localState === "maximized" && e.translationY > 0) {
         y.value = e.translationY + floatHeight;
-        o.value = e.translationY / height;
-        fo.value = e.y / height;
+        // o.value = e.translationY / height;
+        // fo.value = e.y / height;
+        if (e.translationY > height / 2) {
+          (o.value = 1), (fo.value = 0.5);
+        } else {
+          (o.value = 0), (fo.value = 1);
+        }
       }
     })
     .onEnd((e) => {
@@ -150,24 +156,16 @@ export default function Player() {
         setlocalState("minimized");
       } else if (localState === "minimized") {
         if (-e.translationY > height / 2) {
-          // y.value = floatHeight;
           setlocalState("maximized");
         } else {
-          // y.value = height - bottom;
-          // setlocalState("minimized");
           resetY();
         }
-        // setlocalState("minimized");
       } else if (localState === "maximized") {
         if (e.translationY > height / 2) {
-          // y.value = height - bottom;
           setlocalState("minimized");
         } else {
-          // y.value = floatHeight;
-          // setlocalState("maximized");
           resetY();
         }
-        // setlocalState("maximized");
       }
 
       // else if (e.absoluteY < height / 2) {
