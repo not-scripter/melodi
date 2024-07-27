@@ -22,6 +22,7 @@
     "expo-linking": "~6.3.1",
     "expo-navigation-bar": "~3.0.7",
     "expo-router": "~3.5.18",
+    "expo-splash-screen": "~0.27.5",
     "expo-status-bar": "~1.12.1",
     "install-expo-modules": "^0.10.2",
     "nativewind": "^2.0.11",

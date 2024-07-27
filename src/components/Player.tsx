@@ -25,6 +25,7 @@ type localStateProps = "minimized" | "maximized" | "closed";
 
 export default function Player() {
   const { height } = Dimensions.get("screen");
+  const floatHeight = 80;
   const { bottom } = useSafeAreaInsets();
   const dispatch = useDispatch();
   const { colors } = useAppTheme();
@@ -114,7 +115,7 @@ export default function Player() {
       o.value = 1;
       fo.value = 0;
     } else if (localState === "maximized") {
-      y.value = 80;
+      y.value = floatHeight;
       o.value = 0;
       fo.value = 1;
     } else if (localState === "closed") {
@@ -125,32 +126,38 @@ export default function Player() {
   const maximiseHandler = Gesture.Pan()
     .onUpdate((e) => {
       if (localState === "minimized") {
-        y.value = e.absoluteY + 80;
+        y.value = e.absoluteY + floatHeight;
         o.value = e.absoluteY / height;
         fo.value = e.translationY / -height;
       } else if (localState === "maximized") {
-        y.value = e.translationY + 80;
+        y.value = e.translationY + floatHeight;
         o.value = e.translationY / height;
         fo.value = e.y / height;
       }
     })
     .onEnd((e) => {
-      if (e.velocityY < -500) {
+      if (e.velocityY < -1000) {
         setlocalState("maximized");
       } else if (
-        (localState === "minimized" && e.velocityY > 500) ||
-        e.absoluteY > height - 80
+        (localState === "minimized" && e.velocityY > 1000) ||
+        (localState === "minimized" && e.absoluteY > height - floatHeight / 2)
       ) {
         setlocalState("closed");
-      } else if (e.velocityY > 500) {
+      } else if (e.velocityY > 1000) {
         setlocalState("minimized");
       } else if (e.translationY < -height / 2) {
         setlocalState("maximized");
       } else if (e.translationY > height / 2) {
         setlocalState("minimized");
-      } else if (e.absoluteY > height / 2) {
-        setlocalState("maximized");
       } else if (e.absoluteY < height / 2) {
+        if (localState === "maximized") {
+          setlocalState("minimized");
+        }
+        setlocalState("maximized");
+      } else if (e.absoluteY > height / 2) {
+        if (localState === "minimized") {
+          setlocalState("maximized");
+        }
         setlocalState("minimized");
       }
     })

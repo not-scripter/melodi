@@ -3,8 +3,10 @@ import Player from "@/components/Player";
 import { Material3ThemeProvider } from "@/components/providers/Material3ThemeProvider";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import * as Linking from "expo-linking";
+import * as NavigationBar from "expo-navigation-bar";
 import { useRouter } from "expo-router";
 import { Stack } from "expo-router/stack";
+import * as SplashScreen from "expo-splash-screen";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { ActivityIndicator } from "react-native-paper";
 import TrackPlayer from "react-native-track-player";
@@ -12,13 +14,12 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { playbackService } from "rntp-service";
 
-import * as NavigationBar from "expo-navigation-bar";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+// SplashScreen.preventAutoHideAsync();
+
+NavigationBar.setPositionAsync("absolute");
+NavigationBar.setBackgroundColorAsync("#00000000");
 
 export default function RootLayout() {
-  NavigationBar.setPositionAsync("absolute");
-  NavigationBar.setBackgroundColorAsync("#00000000");
-
   const router = useRouter();
 
   Linking.addEventListener("url", ({ url }) => {
