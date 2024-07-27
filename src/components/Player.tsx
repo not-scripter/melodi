@@ -129,7 +129,7 @@ export default function Player() {
         y.value = e.absoluteY + floatHeight;
         o.value = e.absoluteY / height;
         fo.value = e.translationY / -height;
-      } else if (localState === "maximized") {
+      } else if (localState === "maximized" && e.translationY > 0) {
         y.value = e.translationY + floatHeight;
         o.value = e.translationY / height;
         fo.value = e.y / height;
