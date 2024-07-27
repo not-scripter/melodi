@@ -24,7 +24,7 @@ export default function RootLayout() {
 
   Linking.addEventListener("url", ({ url }) => {
     if (url === "trackplayer://notification.click") {
-      router.replace("settings");
+      router.replace("/");
     }
   });
 
