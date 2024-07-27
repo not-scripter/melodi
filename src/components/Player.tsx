@@ -130,13 +130,9 @@ export default function Player() {
     .onUpdate((e) => {
       if (localState === "minimized") {
         y.value = e.absoluteY + floatHeight;
-        // o.value = e.absoluteY / height;
-        // fo.value = e.translationY / -height;
         (o.value = 0), (fo.value = 1);
       } else if (localState === "maximized" && e.translationY > 0) {
         y.value = e.translationY + floatHeight;
-        // o.value = e.translationY / height;
-        // fo.value = e.y / height;
         if (e.translationY > height / 2) {
           (o.value = 1), (fo.value = 0.5);
         } else {
@@ -167,47 +163,6 @@ export default function Player() {
           resetY();
         }
       }
-
-      // else if (e.absoluteY < height / 2) {
-      //   if (localState === "maximized") {
-      //     setlocalState("minimized");
-      //   }
-      //   setlocalState("maximized");
-      // } else if (e.absoluteY > height / 2) {
-      //   if (localState === "minimized") {
-      //     setlocalState("maximized");
-      //     // y.value = height - bottom;
-      //   }
-      //   y.value = floatHeight;
-      //   // setlocalState("minimized");
-      // }
-
-      // if (
-      //   (localState === "minimized" && e.velocityY > 1000) ||
-      //   (localState === "minimized" && e.absoluteY > height - floatHeight / 2)
-      // ) {
-      //   setlocalState("closed");
-      // } else if (e.velocityY < -1000) {
-      //   setlocalState("maximized");
-      // } else if (e.velocityY > 1000) {
-      //   setlocalState("minimized");
-      // } else if (e.translationY < -height / 2) {
-      //   setlocalState("maximized");
-      // } else if (e.translationY > height / 2) {
-      //   setlocalState("minimized");
-      // } else if (e.absoluteY < height / 2) {
-      //   if (localState === "maximized") {
-      //     setlocalState("minimized");
-      //   }
-      //   setlocalState("maximized");
-      // } else if (e.absoluteY > height / 2) {
-      //   if (localState === "minimized") {
-      //     setlocalState("maximized");
-      //     // y.value = height - bottom;
-      //   }
-      //   y.value = floatHeight;
-      //   // setlocalState("minimized");
-      // }
     })
     .runOnJS(true);
 
