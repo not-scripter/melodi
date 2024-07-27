@@ -109,7 +109,7 @@ export default function Player() {
     }
   };
 
-  useEffect(() => {
+  const resetY = () => {
     if (localState === "minimized") {
       y.value = height - bottom;
       o.value = 1;
@@ -121,6 +121,9 @@ export default function Player() {
     } else if (localState === "closed") {
       TrackPlayer.reset();
     }
+  };
+  useEffect(() => {
+    resetY();
   }, [localState]);
 
   const maximiseHandler = Gesture.Pan()
@@ -136,30 +139,77 @@ export default function Player() {
       }
     })
     .onEnd((e) => {
-      if (e.velocityY < -1000) {
-        setlocalState("maximized");
-      } else if (
+      if (
         (localState === "minimized" && e.velocityY > 1000) ||
         (localState === "minimized" && e.absoluteY > height - floatHeight / 2)
       ) {
         setlocalState("closed");
+      } else if (e.velocityY < -1000) {
+        setlocalState("maximized");
       } else if (e.velocityY > 1000) {
         setlocalState("minimized");
-      } else if (e.translationY < -height / 2) {
-        setlocalState("maximized");
-      } else if (e.translationY > height / 2) {
-        setlocalState("minimized");
-      } else if (e.absoluteY < height / 2) {
-        if (localState === "maximized") {
-          setlocalState("minimized");
-        }
-        setlocalState("maximized");
-      } else if (e.absoluteY > height / 2) {
-        if (localState === "minimized") {
+      } else if (localState === "minimized") {
+        if (-e.translationY > height / 2) {
+          // y.value = floatHeight;
           setlocalState("maximized");
+        } else {
+          // y.value = height - bottom;
+          // setlocalState("minimized");
+          resetY();
         }
-        setlocalState("minimized");
+        // setlocalState("minimized");
+      } else if (localState === "maximized") {
+        if (e.translationY > height / 2) {
+          // y.value = height - bottom;
+          setlocalState("minimized");
+        } else {
+          // y.value = floatHeight;
+          // setlocalState("maximized");
+          resetY();
+        }
+        // setlocalState("maximized");
       }
+
+      // else if (e.absoluteY < height / 2) {
+      //   if (localState === "maximized") {
+      //     setlocalState("minimized");
+      //   }
+      //   setlocalState("maximized");
+      // } else if (e.absoluteY > height / 2) {
+      //   if (localState === "minimized") {
+      //     setlocalState("maximized");
+      //     // y.value = height - bottom;
+      //   }
+      //   y.value = floatHeight;
+      //   // setlocalState("minimized");
+      // }
+
+      // if (
+      //   (localState === "minimized" && e.velocityY > 1000) ||
+      //   (localState === "minimized" && e.absoluteY > height - floatHeight / 2)
+      // ) {
+      //   setlocalState("closed");
+      // } else if (e.velocityY < -1000) {
+      //   setlocalState("maximized");
+      // } else if (e.velocityY > 1000) {
+      //   setlocalState("minimized");
+      // } else if (e.translationY < -height / 2) {
+      //   setlocalState("maximized");
+      // } else if (e.translationY > height / 2) {
+      //   setlocalState("minimized");
+      // } else if (e.absoluteY < height / 2) {
+      //   if (localState === "maximized") {
+      //     setlocalState("minimized");
+      //   }
+      //   setlocalState("maximized");
+      // } else if (e.absoluteY > height / 2) {
+      //   if (localState === "minimized") {
+      //     setlocalState("maximized");
+      //     // y.value = height - bottom;
+      //   }
+      //   y.value = floatHeight;
+      //   // setlocalState("minimized");
+      // }
     })
     .runOnJS(true);
 
