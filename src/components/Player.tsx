@@ -25,15 +25,20 @@ type localStateProps = "minimized" | "maximized" | "closed";
 
 export default function Player() {
   const { height } = Dimensions.get("screen");
-  const floatHeight = 80;
+  // const floatHeight = 80;
   const { bottom } = useSafeAreaInsets();
   const dispatch = useDispatch();
   const { colors } = useAppTheme();
   const track: Track | undefined = useActiveTrack();
 
   const { activeTrack } = useSelector((state: RootState) => state.track);
+  const { floatingPlayerHeight } = useSelector(
+    (state: RootState) => state.settings.appearance,
+  );
 
-  const [localState, setlocalState] = useState<localStateProps>("minimized");
+  const [localState, setlocalState] = useState<localStateProps>(
+    track ? "minimized" : "closed",
+  );
 
   // TrackPlayer.addEventListener(
   //   Event.PlaybackProgressUpdated,
@@ -51,7 +56,7 @@ export default function Player() {
       o.value = 1;
       setlocalState("minimized");
     } else if (state === "stopped") {
-      y.value = height + 80 + bottom;
+      y.value = height + floatingPlayerHeight! + bottom;
       o.value = 0;
     }
   });
@@ -76,7 +81,7 @@ export default function Player() {
     setup();
   }, []);
 
-  const y = useSharedValue(height - bottom);
+  const y = useSharedValue(height + floatingPlayerHeight! + bottom);
 
   const o = useSharedValue(1);
   const floatingOpacity = useAnimatedStyle(() => ({
@@ -115,11 +120,14 @@ export default function Player() {
       o.value = 1;
       fo.value = 0;
     } else if (localState === "maximized") {
-      y.value = floatHeight;
+      y.value = floatingPlayerHeight!;
       o.value = 0;
       fo.value = 1;
     } else if (localState === "closed") {
       TrackPlayer.reset();
+      y.value = height + floatingPlayerHeight! + bottom;
+      o.value = 0;
+      fo.value = 0;
     }
   };
   useEffect(() => {
@@ -129,21 +137,23 @@ export default function Player() {
   const maximiseHandler = Gesture.Pan()
     .onUpdate((e) => {
       if (localState === "minimized") {
-        y.value = e.absoluteY + floatHeight;
+        y.value = e.absoluteY + floatingPlayerHeight!;
         (o.value = 0), (fo.value = 1);
       } else if (localState === "maximized" && e.translationY > 0) {
-        y.value = e.translationY + floatHeight;
+        y.value = e.translationY + floatingPlayerHeight!;
         if (e.translationY > height / 2) {
           (o.value = 1), (fo.value = 0.5);
         } else {
           (o.value = 0), (fo.value = 1);
         }
       }
+      console.log(y.value, height + bottom + floatingPlayerHeight!);
     })
     .onEnd((e) => {
       if (
         (localState === "minimized" && e.velocityY > 1000) ||
-        (localState === "minimized" && e.absoluteY > height - floatHeight / 2)
+        (localState === "minimized" &&
+          e.absoluteY > height - floatingPlayerHeight! / 2)
       ) {
         setlocalState("closed");
       } else if (e.velocityY < -1000) {

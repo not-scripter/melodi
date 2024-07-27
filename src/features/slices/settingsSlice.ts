@@ -12,6 +12,7 @@ export type AppearanceProps = {
   typography: {
     useSystemFont: boolean;
   };
+  floatingPlayerHeight?: number;
 };
 export type ControlsProps = {
   player: {
@@ -52,6 +53,7 @@ const initialState: SettingsProps = {
     typography: {
       useSystemFont: false,
     },
+    floatingPlayerHeight: 80,
   },
   controls: {
     player: {
