@@ -22,11 +22,11 @@ NavigationBar.setBackgroundColorAsync("#00000000");
 export default function RootLayout() {
   const router = useRouter();
 
-  Linking.addEventListener("url", ({ url }) => {
-    if (url === "trackplayer://notification.click") {
-      router.replace("/");
-    }
-  });
+  // Linking.addEventListener("url", ({ url }) => {
+  //   if (url === "trackplayer://notification.click") {
+  //     // router.replace("/");
+  //   }
+  // });
 
   // const insets = useSafeAreaInsets();
   // console.log(insets);

@@ -3,7 +3,7 @@ import FloatingPlayer from "@/components/FloatingPlayer";
 import FullPlayer from "@/components/FullPlayer";
 import { setActiveTrack } from "@/features/slices/trackSlice";
 import React, { useEffect, useState } from "react";
-import { Dimensions, Pressable, View } from "react-native";
+import { Dimensions, Linking, Pressable, View } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
   ReduceMotion,
@@ -20,10 +20,20 @@ import TrackPlayer, {
 import { useDispatch, useSelector } from "react-redux";
 import { addTrack, setupPlayer } from "rntp-service";
 import { useAppTheme } from "./providers/Material3ThemeProvider";
+import { useRouter } from "expo-router";
 
 type localStateProps = "minimized" | "maximized" | "closed";
 
 export default function Player() {
+  const router = useRouter();
+
+  Linking.addEventListener("url", ({ url }) => {
+    if (url === "trackplayer://notification.click") {
+      router.canDismiss();
+      setlocalState("maximized");
+    }
+  });
+
   const { height } = Dimensions.get("screen");
   // const floatHeight = 80;
   const { bottom } = useSafeAreaInsets();

@@ -12,6 +12,7 @@ export type AppearanceProps = {
   typography: {
     useSystemFont: boolean;
   };
+  playerHeight?: number;
   floatingPlayerHeight?: number;
 };
 export type ControlsProps = {
@@ -53,6 +54,7 @@ const initialState: SettingsProps = {
     typography: {
       useSystemFont: false,
     },
+    playerHeight: 0,
     floatingPlayerHeight: 80,
   },
   controls: {
@@ -94,6 +96,9 @@ export const settingsSlice = createSlice({
         },
       };
     },
+    setPlayerHeight: (state, { payload }) => {
+      state.appearance.playerHeight = payload;
+    },
     setcontrols: (state, { payload }: PayloadAction<ControlsProps>) => {
       state.controls = {
         player: {
@@ -125,7 +130,12 @@ export const settingsSlice = createSlice({
   },
 });
 
-export const { setappearance, setcontrols, setstorage, setothers } =
-  settingsSlice.actions;
+export const {
+  setappearance,
+  setcontrols,
+  setstorage,
+  setothers,
+  setPlayerHeight,
+} = settingsSlice.actions;
 
 export default settingsSlice.reducer;
