@@ -20,7 +20,7 @@ NavigationBar.setPositionAsync("absolute");
 NavigationBar.setBackgroundColorAsync("#00000000");
 
 export default function RootLayout() {
-  const router = useRouter();
+  // const router = useRouter();
 
   // Linking.addEventListener("url", ({ url }) => {
   //   if (url === "trackplayer://notification.click") {

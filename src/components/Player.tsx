@@ -35,7 +35,6 @@ export default function Player() {
   });
 
   const { height } = Dimensions.get("screen");
-  // const floatHeight = 80;
   const { bottom } = useSafeAreaInsets();
   const dispatch = useDispatch();
   const { colors } = useAppTheme();
@@ -118,11 +117,11 @@ export default function Player() {
     ],
   }));
 
-  const handleTap = () => {
-    if (localState === "minimized") {
-      setlocalState("maximized");
-    }
-  };
+  // const handleTap = () => {
+  //   if (localState === "minimized") {
+  //     setlocalState("maximized");
+  //   }
+  // };
 
   const resetY = () => {
     if (localState === "minimized") {
@@ -157,7 +156,6 @@ export default function Player() {
           (o.value = 0), (fo.value = 1);
         }
       }
-      console.log(y.value, height + bottom + floatingPlayerHeight!);
     })
     .onEnd((e) => {
       if (
@@ -186,6 +184,14 @@ export default function Player() {
     })
     .runOnJS(true);
 
+  const handleTap = Gesture.Tap()
+    .onEnd(() => {
+      if (localState === "minimized") {
+        setlocalState("maximized");
+      }
+    })
+    .runOnJS(true);
+
   return (
     <Animated.View
       style={[animatedPlayerStyle]}
@@ -196,11 +202,11 @@ export default function Player() {
           className="w-full h-full -top-20 relative"
           style={{ backgroundColor: colors.background }}
         >
-          <Pressable onPress={handleTap}>
+          <GestureDetector gesture={handleTap}>
             <Animated.View className="h-20" style={[floatingOpacity]}>
               <FloatingPlayer track={track} />
             </Animated.View>
-          </Pressable>
+          </GestureDetector>
           <Animated.View
             style={[fullOpacity]}
             className="h-full flex-1 items-center justify-center absolute"
