@@ -1,0 +1,16 @@
+--bare
+-I
+/home/mrinmoy/geet/build/Desktop_x64_Debug
+-I
+/home/mrinmoy/geet/build/Desktop_x64_Debug/geet
+-I
+/home/mrinmoy/geet/build/Desktop_x64_Debug
+-I
+/usr/lib/qt6/qml
+--resource
+/home/mrinmoy/geet/build/Desktop_x64_Debug/.qt/rcc/qmake_geet.qrc
+--resource
+/home/mrinmoy/geet/build/Desktop_x64_Debug/.qt/rcc/appgeet_raw_qml_0.qrc
+/home/mrinmoy/geet/Main.qml
+--json
+/home/mrinmoy/geet/build/Desktop_x64_Debug/appgeet_qmllint.json

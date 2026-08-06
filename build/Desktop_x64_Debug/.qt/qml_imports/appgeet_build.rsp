@@ -1,0 +1,14 @@
+-rootPath
+/home/mrinmoy/geet
+-cmake-output
+-output-file
+/home/mrinmoy/geet/build/Desktop_x64_Debug/.qt/qml_imports/appgeet_build.cmake
+-importPath
+/home/mrinmoy/geet/build/Desktop_x64_Debug
+-importPath
+/home/mrinmoy/geet/build/Desktop_x64_Debug/geet
+-importPath
+/usr/lib/qt6/qml
+-qrcFiles
+/home/mrinmoy/geet/build/Desktop_x64_Debug/.qt/rcc/qmake_geet.qrc
+/home/mrinmoy/geet/build/Desktop_x64_Debug/.qt/rcc/appgeet_raw_qml_0.qrc

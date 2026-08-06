@@ -1,0 +1,6 @@
+module geet
+typeinfo appgeet.qmltypes
+prefer :/qt/qml/geet/
+Main 254.0 Main.qml
+depends QtQuick
+

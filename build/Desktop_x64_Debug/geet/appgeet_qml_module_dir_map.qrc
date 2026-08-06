@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="/">
+    <file alias="/qt/qml/geet">/home/mrinmoy/geet/build/Desktop_x64_Debug/geet</file>
+
+  </qresource>
+</RCC>

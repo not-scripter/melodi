@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="/qt/qml/geet/">
+    <file alias="Main.qml">/home/mrinmoy/geet/Main.qml</file>
+  </qresource>
+</RCC>
+

@@ -1,0 +1,5 @@
+--resource
+/home/mrinmoy/geet/build/Desktop_x64_Debug/.qt/rcc/qmake_geet.qrc
+--resource
+/home/mrinmoy/geet/build/Desktop_x64_Debug/.qt/rcc/appgeet_raw_qml_0.qrc
+/qt/qml/geet/Main.qml
